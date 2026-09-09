@@ -1,0 +1,1805 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MirandasTech · LaTeX com Overleaf e abnTeX2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+
+:root{
+  --paper:#F1F4F7; --surface:#FFFFFF; --surface-2:#F8FAFB;
+  --ink:#101720; --ink-2:#4A5866; --ink-3:#75828E;
+  --rule:#D3DAE1; --rule-2:#E5EAEF;
+  --blueprint:#17436B; --blueprint-2:#2C6396; --blueprint-soft:#E4EDF5;
+  --signal:#C4530E; --signal-soft:#FBEADD;
+  --go:#186B50; --go-soft:#E0EFE9;
+  --stop:#A0231C; --stop-soft:#F9E5E3;
+  --amber:#8A6000; --amber-soft:#F9EFD6;
+  --shadow:0 1px 2px rgba(16,23,32,.06),0 8px 24px -12px rgba(16,23,32,.18);
+  --serif:'Spectral',Georgia,'Times New Roman',serif;
+  --cond:'IBM Plex Sans Condensed','Helvetica Neue',Arial,sans-serif;
+  --mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1218; --surface:#131B23; --surface-2:#182129;
+    --ink:#E3E9EF; --ink-2:#94A3B1; --ink-3:#71808E;
+    --rule:#26313C; --rule-2:#1E2831;
+    --blueprint:#7DB2DF; --blueprint-2:#A3CAEB; --blueprint-soft:#15283A;
+    --signal:#EE8A46; --signal-soft:#33200F;
+    --go:#54C398; --go-soft:#0F2620;
+    --stop:#EC7B72; --stop-soft:#2D1614;
+    --amber:#DCAC3D; --amber-soft:#2A2110;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1218; --surface:#131B23; --surface-2:#182129;
+  --ink:#E3E9EF; --ink-2:#94A3B1; --ink-3:#71808E;
+  --rule:#26313C; --rule-2:#1E2831;
+  --blueprint:#7DB2DF; --blueprint-2:#A3CAEB; --blueprint-soft:#15283A;
+  --signal:#EE8A46; --signal-soft:#33200F;
+  --go:#54C398; --go-soft:#0F2620;
+  --stop:#EC7B72; --stop-soft:#2D1614;
+  --amber:#DCAC3D; --amber-soft:#2A2110;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+:focus-visible{outline:2px solid var(--blueprint-2);outline-offset:3px;border-radius:2px}
+
+/* ---------- sections ---------- */
+.part{padding-top:56px}
+.part-head{display:flex;align-items:baseline;gap:14px;border-top:1px solid var(--rule);padding-top:14px;margin-bottom:8px}
+.part-num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--signal);font-weight:600}
+.part-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+h2{font-family:var(--cond);font-weight:700;font-size:clamp(27px,3.6vw,38px);line-height:1.12;letter-spacing:-.012em;margin:6px 0 0;text-wrap:balance;max-width:22ch}
+h3{font-family:var(--cond);font-weight:600;font-size:22px;line-height:1.25;margin:40px 0 0;color:var(--ink);text-wrap:balance}
+h4{font-family:var(--cond);font-weight:600;font-size:17px;line-height:1.3;margin:26px 0 0;color:var(--blueprint);letter-spacing:.01em}
+p,ul,ol{max-width:68ch}
+p{margin:14px 0 0}
+ul,ol{margin:14px 0 0;padding-left:22px}
+li{margin:7px 0}
+li::marker{color:var(--blueprint)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--blueprint);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+code{font-family:var(--mono);font-size:.855em;background:var(--surface-2);border:1px solid var(--rule-2);padding:1px 5px;border-radius:3px;color:var(--ink)}
+.dek{font-size:18px;color:var(--ink-2);max-width:64ch;margin:16px 0 0;line-height:1.6}
+
+/* ---------- blocks ---------- */
+.rule-box,.trap,.case,.note{margin:24px 0 0;padding:16px 20px;border-radius:4px;max-width:74ch;border-left:3px solid}
+.rule-box{background:var(--blueprint-soft);border-left-color:var(--blueprint)}
+.trap{background:var(--signal-soft);border-left-color:var(--signal)}
+.case{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--go)}
+.note{background:var(--surface-2);border-left-color:var(--ink-3)}
+.blabel{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;display:block;margin-bottom:7px}
+.rule-box .blabel{color:var(--blueprint)}
+.trap .blabel{color:var(--signal)}
+.case .blabel{color:var(--go)}
+.note .blabel{color:var(--ink-3)}
+.rule-box p:first-of-type,.trap p:first-of-type,.case p:first-of-type,.note p:first-of-type{margin-top:0}
+.rule-box p,.trap p,.case p,.rule-box li,.trap li,.case li,.note p,.note li{max-width:none;font-size:16px}
+.case .src{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:10px;display:block;line-height:1.5}
+
+/* ---------- figures ---------- */
+figure{margin:34px 0 0;max-width:none}
+figcaption{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);margin-top:11px;line-height:1.5;max-width:76ch}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--signal);font-weight:600;margin-right:7px}
+.frame{border:1px solid var(--rule);background:var(--surface);border-radius:4px;padding:24px;overflow-x:auto}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:26px 0 0;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:var(--cond);font-size:14.5px;min-width:520px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--rule);background:var(--surface-2);vertical-align:bottom}
+td{padding:11px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top;line-height:1.45;color:var(--ink)}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px;white-space:nowrap}
+td.mono{font-family:var(--mono);font-size:12.5px}
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;font-weight:600;text-transform:uppercase;padding:2.5px 8px;border-radius:20px;white-space:nowrap}
+.p-go{background:var(--go-soft);color:var(--go)}
+.p-amber{background:var(--amber-soft);color:var(--amber)}
+.p-stop{background:var(--stop-soft);color:var(--stop)}
+.p-blue{background:var(--blueprint-soft);color:var(--blueprint)}
+
+/* ---------- terminal ---------- */
+.term{background:#0B1219;border:1px solid #223040;border-radius:5px;overflow:hidden;margin:26px 0 0}
+.term-bar{display:flex;align-items:center;gap:7px;padding:8px 13px;background:#141F2B;border-bottom:1px solid #223040}
+.term-dot{width:9px;height:9px;border-radius:50%;background:#33445A}
+.term-title{font-family:var(--mono);font-size:10.5px;color:#7A8B9C;margin-left:8px;letter-spacing:.05em}
+.term pre{margin:0;padding:15px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.62;color:#C9D6E2}
+.term .c-p{color:#5FA8DC}
+.term .c-o{color:#E8A055}
+.term .c-g{color:#5FC79A}
+.term .c-m{color:#71828F}
+.term .c-r{color:#E8776C}
+
+/* ---------- code ---------- */
+.code{background:var(--surface-2);border:1px solid var(--rule);border-radius:4px;margin:24px 0 0;overflow:hidden}
+.code-head{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);padding:8px 14px;border-bottom:1px solid var(--rule);background:var(--surface)}
+.code pre{margin:0;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.66;color:var(--ink)}
+.code .k{color:var(--blueprint);font-weight:500}
+.code .s{color:var(--go)}
+.code .cm{color:var(--ink-3);font-style:italic}
+
+/* ---------- charts ---------- */
+.bars{display:flex;flex-direction:column;gap:11px;margin:0}
+.bar-row{display:grid;grid-template-columns:minmax(96px,152px) minmax(0,1fr) 62px;gap:12px;align-items:center}
+.bar-lab{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);line-height:1.25;text-align:right}
+.bar-track{background:var(--rule-2);border-radius:2px;height:22px;position:relative;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px;background:var(--blueprint)}
+.bar-fill.f-signal{background:var(--signal)}
+.bar-fill.f-go{background:var(--go)}
+.bar-fill.f-stop{background:var(--stop)}
+.bar-fill.f-amber{background:var(--amber)}
+.bar-fill.f-mute{background:var(--ink-3)}
+.bar-val{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right;font-weight:500}
+.bar-zero{font-family:var(--mono);font-size:11px;color:var(--stop);font-weight:600;position:absolute;left:4px;top:50%;transform:translateY(-50%)}
+@media (max-width:560px){.bar-row{grid-template-columns:minmax(72px,102px) minmax(0,1fr) 52px;gap:8px}.bar-lab{font-size:12px}}
+
+/* funnel */
+.funnel{display:flex;flex-direction:column;gap:8px;align-items:center}
+.fstep{border:1px solid var(--rule);background:var(--surface-2);border-radius:4px;padding:12px 18px;text-align:center;width:100%;max-width:640px;position:relative}
+.fstep .fn{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.fstep .ft{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);margin-top:5px;line-height:1.35}
+.fstep.hl{border-color:var(--signal);background:var(--signal-soft)}
+.fstep.hl .fn{color:var(--signal)}
+.fdrop{font-family:var(--mono);font-size:11.5px;color:var(--stop);text-align:center;line-height:1.4}
+
+/* flow map */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px}
+.node{border:1px solid var(--rule);border-radius:4px;background:var(--surface-2);padding:12px 13px;display:flex;flex-direction:column;gap:6px}
+.node .nn{font-family:var(--mono);font-size:10px;letter-spacing:.11em;color:var(--ink-3);font-weight:600}
+.node .nt{font-family:var(--cond);font-size:15px;font-weight:600;line-height:1.22;color:var(--ink)}
+.node .nd{font-size:13px;color:var(--ink-2);line-height:1.45;font-family:var(--cond)}
+.node .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.node.gate{border-color:var(--stop);background:var(--stop-soft)}
+.node.gate .nn{color:var(--stop)}
+
+/* two-column compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--surface)}
+.compare>div{padding:18px 20px}
+.compare>div:first-child{border-right:1px solid var(--rule)}
+.cmp-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+.compare ul{margin:0;padding-left:18px;max-width:none}
+.compare li{font-family:var(--cond);font-size:14.5px;line-height:1.45;margin:8px 0;color:var(--ink)}
+@media (max-width:640px){.compare{grid-template-columns:1fr}.compare>div:first-child{border-right:0;border-bottom:1px solid var(--rule)}}
+
+/* ui schematic */
+.ui{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);font-family:var(--cond)}
+.ui-bar{background:var(--surface-2);border-bottom:1px solid var(--rule);padding:7px 12px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center}
+.ui-body{display:grid;grid-template-columns:170px minmax(0,1fr);min-height:150px}
+.ui-side{border-right:1px solid var(--rule);padding:10px;background:var(--surface-2);font-size:13px;color:var(--ink-2)}
+.ui-side div{padding:3.5px 6px;border-radius:3px;line-height:1.3}
+.ui-side div.sel{background:var(--blueprint-soft);color:var(--blueprint);font-weight:600}
+.ui-main{padding:10px}
+.ui-row{display:grid;grid-template-columns:minmax(0,1fr) 78px 46px;gap:9px;padding:6px 7px;border-bottom:1px solid var(--rule-2);font-size:13px;align-items:center;color:var(--ink)}
+.ui-row.head{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--rule)}
+.ui-row span:nth-child(2),.ui-row span:nth-child(3){font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+.schematic-tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);border:1px dashed var(--rule);padding:2px 7px;border-radius:3px}
+@media (max-width:560px){.ui-body{grid-template-columns:1fr}.ui-side{border-right:0;border-bottom:1px solid var(--rule)}}
+
+/* checklist */
+.check{border:1px solid var(--rule);border-radius:4px;background:var(--surface);overflow:hidden}
+.check-item{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-bottom:1px solid var(--rule-2)}
+.check-item:last-child{border-bottom:0}
+.check-item input{margin:4px 0 0;width:16px;height:16px;accent-color:var(--blueprint);flex:none;cursor:pointer}
+.check-item label{font-family:var(--cond);font-size:14.5px;line-height:1.45;cursor:pointer;color:var(--ink)}
+.check-item label b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-bottom:2px}
+.check-item.done label{color:var(--ink-3);text-decoration:line-through}
+.check-foot{padding:10px 16px;background:var(--surface-2);border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;color:var(--ink-3);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.check-foot button{font-family:var(--mono);font-size:10.5px;background:none;border:1px solid var(--rule);color:var(--ink-2);padding:3px 10px;border-radius:3px;cursor:pointer;letter-spacing:.05em}
+.check-foot button:hover{border-color:var(--blueprint);color:var(--blueprint)}
+
+/* refs */
+.refs{margin:14px 0 0;padding-left:30px;list-style:decimal;max-width:none}
+.refs li{display:list-item;padding:6px 0 6px 4px;border-bottom:1px solid var(--rule-2);margin:0;font-family:var(--cond);font-size:13.5px;line-height:1.4}
+.refs li::marker{font-family:var(--mono);font-size:11px;color:var(--signal);font-weight:600}
+.refs li a{overflow-wrap:anywhere;font-family:var(--mono);font-size:11px;display:inline-block;margin-top:2px;color:var(--ink-3);text-decoration:none}
+.refs li a:hover{color:var(--blueprint);text-decoration:underline}
+.refs .rt{color:var(--ink);font-weight:500}
+
+.colophon{margin-top:70px;padding-top:22px;border-top:3px solid var(--blueprint);font-family:var(--mono);font-size:11.5px;color:var(--ink-3);line-height:1.75}
+.kicker{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);margin:36px 0 0;display:block;font-weight:600}
+
+
+
+/* ================= motor de slides ================= */
+html{scroll-snap-type:y proximity;scroll-behavior:smooth}
+body{margin:0}
+.slide{height:100vh;min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:flex-start;padding:26px clamp(64px,6vw,96px) 26px;font-size:15.5px;overflow:hidden;position:relative;border-bottom:1px solid var(--rule-2);background:var(--paper)}
+.slide.alt{background:var(--surface-2)}
+.slide .inner{max-width:none;width:100%;margin:0;max-height:calc(100vh - 52px);overflow:auto;scrollbar-width:thin}
+.slide.fit .inner{overflow:visible}
+.slide h2{max-width:none;font-size:clamp(24px,3.2vw,38px);margin-top:6px}
+.slide .lead{font-size:clamp(15.5px,1.35vw,18px);color:var(--ink-2);max-width:none;margin:10px 0 0;line-height:1.5}
+.slide p,.slide ul,.slide ol,.slide .rule-box,.slide .trap,.slide .case,.slide .note,.slide .more,.slide figcaption,.slide .check,.slide .refs,.slide h2{max-width:none}
+.two{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(16px,2.4vw,34px);align-items:start;margin-top:16px}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+.two figure,.two .tw,.two .code,.two .term{margin-top:0}
+.kicker-part{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);font-weight:600}
+.kicker-part span{color:var(--ink-3);font-weight:400;margin-left:10px}
+.more{margin-top:16px;max-width:76ch;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+.more summary{cursor:pointer;font-family:var(--cond);font-weight:600;font-size:14px;padding:10px 14px;color:var(--blueprint);list-style:none;display:flex;align-items:center;gap:8px}
+.more summary::before{content:"+";font-family:var(--mono);width:16px;display:inline-block;text-align:center}
+.more[open] summary::before{content:"–"}
+.more>div{padding:0 16px 14px;font-size:15.5px}
+.more>div p,.more>div li{max-width:none;font-size:15.5px}
+.more .tw{margin-top:10px}
+.bul{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:9px}
+.bul li{position:relative;padding-left:24px;font-size:15.5px;line-height:1.5;margin:0}
+.bul li::before{content:"";position:absolute;left:4px;top:9px;width:10px;height:10px;border-radius:2px;background:var(--blueprint)}
+.bul li.warn::before{background:var(--signal)}
+.bul li.stop::before{background:var(--stop)}
+.bul li.go::before{background:var(--go)}
+
+/* capa */
+.slide.cover{justify-content:center;background:var(--paper)}
+.slide.divider{justify-content:center}
+.brand{font-family:var(--cond);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--blueprint);display:inline-flex;align-items:center;gap:10px}
+.brand::before{content:"";width:22px;height:2px;background:var(--signal)}
+.cover h1{font-family:var(--cond);font-weight:700;font-size:clamp(42px,7.2vw,88px);line-height:.98;letter-spacing:-.02em;margin:22px 0 0;text-wrap:balance;max-width:none}
+.cover .lede{font-size:clamp(18px,1.9vw,23px);color:var(--ink-2);max-width:none;margin:22px 0 0;line-height:1.55}
+.cover-meta{margin-top:34px;display:flex;flex-wrap:wrap;gap:24px 40px;font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.04em}
+.cover-meta b{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px;font-weight:600}
+.cover-meta span{font-family:var(--cond);font-size:15px;color:var(--ink);letter-spacing:0}
+.hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+.hint::after{content:"↓";animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* separador de parte */
+.slide.divider{justify-content:center;background:var(--blueprint);color:#F1F4F7;border-bottom:0}
+.slide.divider .kicker-part{color:#F4B07A}
+.slide.divider .kicker-part span{color:rgba(241,244,247,.6)}
+.slide.divider h2{color:#FFFFFF;font-size:clamp(40px,6vw,74px);max-width:none}
+.slide.divider p{color:rgba(241,244,247,.82);font-size:clamp(17px,1.7vw,21px);max-width:none}
+.slide.divider .num{font-family:var(--mono);font-size:clamp(90px,16vw,200px);font-weight:600;color:rgba(255,255,255,.08);position:absolute;right:4vw;bottom:-2vw;line-height:1;letter-spacing:-.04em;pointer-events:none}
+
+/* barra fixa, progresso, navegação */
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(14px,3vw,28px);background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);z-index:40}
+.topbar .brand{font-size:12px}
+.topbar .where{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em;display:flex;align-items:center;gap:12px}
+.topbar .where b{color:var(--ink);font-weight:600}
+.prog{position:fixed;top:0;left:0;height:3px;background:var(--signal);width:0;z-index:41;transition:width .25s ease}
+.navbtn{position:fixed;left:clamp(8px,1.2vw,18px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:40;align-items:center;opacity:.28;transition:opacity .25s ease}
+.navbtn:hover,.navbtn:focus-within{opacity:1}
+@media (hover:none){.navbtn{opacity:.85}}
+.navbtn .cnt{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.04em;margin-top:2px}
+.navbtn .cnt b{color:var(--ink)}
+.navbtn button,.menubtn{font-family:var(--mono);font-size:13px;width:42px;height:42px;border-radius:4px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer;box-shadow:var(--shadow);display:inline-flex;align-items:center;justify-content:center}
+.navbtn button:hover,.menubtn:hover{border-color:var(--blueprint);color:var(--blueprint)}
+.menubtn{font-size:16px}
+.menu{position:fixed;inset:0 auto 0 0;width:min(360px,92vw);background:var(--surface);border-right:1px solid var(--rule);box-shadow:var(--shadow);z-index:45;overflow-y:auto;padding:14px 10px 40px;transform:translateX(-102%);transition:transform .28s ease}
+.menu.open{transform:none}
+.menu .grp{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:14px 10px 4px;border-top:1px solid var(--rule-2);margin-top:6px}
+.menu .grp:first-child{border-top:0;margin-top:0}
+.menu a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink-2);font-family:var(--cond);font-size:14px;padding:6px 10px;border-radius:3px;border-left:2px solid transparent}
+.menu a .n{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);min-width:20px;font-variant-numeric:tabular-nums}
+.menu a:hover{background:var(--blueprint-soft);color:var(--ink)}
+.menu a.on{border-left-color:var(--blueprint);color:var(--blueprint);background:var(--blueprint-soft);font-weight:600}
+.scrim{position:fixed;inset:0;background:rgba(16,23,32,.25);z-index:44;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.on{opacity:1;pointer-events:auto}
+
+/* efeitos de entrada — estado de repouso legível; só deslocamento e leve fade */
+.rv{transform:translateY(16px);opacity:.55;transition:transform .55s cubic-bezier(.2,.7,.2,1),opacity .55s ease}
+.slide.in .rv{transform:none;opacity:1}
+.slide.in .rv:nth-child(2){transition-delay:.06s}.slide.in .rv:nth-child(3){transition-delay:.12s}.slide.in .rv:nth-child(4){transition-delay:.18s}.slide.in .rv:nth-child(5){transition-delay:.24s}.slide.in .rv:nth-child(6){transition-delay:.30s}
+.slide.cover .rv{transform:none;opacity:1}
+@media (prefers-reduced-motion:reduce){.rv{transform:none;opacity:1;transition:none}.hint::after{animation:none}.prog{transition:none}.menu{transition:none}}
+
+/* figuras leves */
+.shot{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.shot img{display:block;width:100%;height:auto}
+.sets{position:relative;height:250px;max-width:520px;margin:0 auto;font-family:var(--cond)}
+.sets div{position:absolute;border-radius:50%;border:1.5px solid var(--rule);display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-size:13px;color:var(--ink-2);text-align:center;line-height:1.3}
+.sets .s1{inset:0;background:var(--surface-2)}
+.sets .s2{inset:12% 15% 8% 15%;background:var(--amber-soft);border-color:var(--amber)}
+.sets .s3{inset:38% 32% 14% 32%;background:var(--signal-soft);border-color:var(--signal);align-items:center;padding:0;font-weight:600;color:var(--signal)}
+.dec{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:20px}
+.dec div{border:1px solid var(--rule);border-radius:4px;padding:12px 14px;background:var(--surface)}
+.dec b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;margin-bottom:6px}
+.dec .h{border-left:3px solid var(--stop)}.dec .h b{color:var(--stop)}
+.dec .p{border-left:3px solid var(--amber)}.dec .p b{color:var(--amber)}
+.dec .m{border-left:3px solid var(--go)}.dec .m b{color:var(--go)}
+.dec ul{margin:0;padding-left:16px;max-width:none}
+.dec li{font-family:var(--cond);font-size:14px;line-height:1.4;margin:4px 0}
+
+/* impressão: um slide por página */
+@page{size:A4 landscape;margin:12mm}
+@media print{
+  html{scroll-snap-type:none}
+  body{background:#fff;color:#101720}
+  .prog,.navbtn,.menubtn,.menu,.scrim,.hint{display:none!important}
+  .slide{min-height:0;height:auto;break-after:page;padding:8mm 4mm;border:0;justify-content:flex-start;overflow:visible}
+  .slide .inner{max-height:none;overflow:visible;zoom:1!important}
+  .slide.divider{background:#17436B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rv{transform:none;opacity:1}
+  .more{display:block}.more>div{display:block}
+  .term{background:#0B1219!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rule-box,.trap,.case,.note,.pill,.bar-fill,.bar-track,.node,.dec div,.sets div{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .code pre,.term pre{white-space:pre-wrap;word-break:break-word}
+  a{color:inherit;text-decoration:none}
+}
+
+/* limites de altura: um slide por tela */
+.slide .tw{max-height:none;overflow:auto}
+.slide .tw table{font-size:13.5px}
+.slide .tw td,.slide .tw th{padding:8px 11px}
+.slide figure{margin-top:14px}
+.slide .shot img{max-height:34vh;width:auto;max-width:100%;margin:0 auto}
+.slide .code pre,.slide .term pre{max-height:none;overflow:auto;font-size:12px}
+.slide .rule-box,.slide .trap,.slide .case,.slide .note{margin-top:14px;padding:12px 16px}
+.slide .rule-box p,.slide .trap p,.slide .case p,.slide .note p{font-size:14.5px}
+.slide ol,.slide ul{margin-top:10px}
+.slide li{margin:5px 0;font-size:15px}
+.slide h4{margin-top:14px}
+.slide .check{max-height:none}
+.slide .refs{max-height:none}
+.slide .refs li{font-size:13px;padding:6px 0 6px 4px}
+.slide figcaption{font-size:12.5px;margin-top:8px}
+.slide .dec ul{padding-left:14px}.slide .dec li{font-size:13.5px}
+.slide .frame{padding:16px}
+.slide .sets{height:210px}
+@media (max-height:760px){.slide .shot img{max-height:30vh}}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.three figure{margin:0}
+.three .shot img{max-height:none}
+@media (max-width:900px){.three{grid-template-columns:1fr}}
+.slide .node{padding:9px 11px;gap:4px}.slide .node .nt{font-size:14px}.slide .node .nd{font-size:12px}
+
+/* ================= celular e tablet ================= */
+@media (max-width:900px){
+  html{scroll-snap-type:none}
+  .slide{height:auto;min-height:0;overflow:visible;padding:26px 16px 30px;scroll-snap-align:none;font-size:15px}
+  .slide .inner{max-height:none;overflow:visible;zoom:1!important}
+  .slide.cover,.slide.divider{min-height:72vh;padding:40px 18px}
+  .cover h1{font-size:clamp(38px,11vw,60px)}
+  .cover .lede{font-size:17px}
+  .cover-meta{gap:14px 24px}
+  .hint{display:none}
+  .slide h2{font-size:clamp(23px,6.4vw,30px)}
+  .slide .lead{font-size:15.5px}
+  .kicker-part span{display:block;margin-left:0;margin-top:2px}
+  .two,.three{grid-template-columns:minmax(0,1fr);gap:14px}
+  .slide{max-width:100vw;overflow-x:hidden}
+  .slide .inner{min-width:0}
+  .two>*,.three>*{min-width:0}
+  .slide .tw{max-height:none}
+  .slide .tw table{min-width:560px;font-size:13px}
+  .slide .shot img{max-height:none}
+  .slide .code pre,.slide .term pre{max-height:none;font-size:11.5px}
+  .slide .refs,.slide .check{max-height:none}
+  .compare{grid-template-columns:minmax(0,1fr)}.compare>div:first-child{border-right:0;border-bottom:1px solid var(--rule)}
+  .dec{grid-template-columns:minmax(0,1fr)}
+  .flow{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+  .sets{height:200px}
+  .navbtn{left:auto;right:10px;top:auto;bottom:10px;transform:none;flex-direction:row;gap:6px;padding:6px;background:color-mix(in srgb,var(--surface) 92%,transparent);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow)}
+  .navbtn button,.menubtn{width:38px;height:38px;box-shadow:none}
+  .navbtn .cnt{margin:0 4px 0 2px}
+  .menu{width:100vw;inset:0 0 0 0}
+  .slide.divider .num{font-size:24vw;right:2vw;bottom:-3vw}
+  .rule-box,.trap,.case,.note{padding:12px 14px}
+}
+@media (max-width:480px){
+  .slide{padding:22px 12px 26px}
+  .plate div,.cover-meta div{width:100%}
+  .bar-row{grid-template-columns:minmax(64px,90px) minmax(0,1fr) 46px;gap:6px}
+  .ui-body{grid-template-columns:1fr}.ui-side{border-right:0;border-bottom:1px solid var(--rule)}
+}
+.gl4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:14px}
+.gl{column-count:1}
+.gl{margin:0;font-family:var(--cond);font-size:12.5px;line-height:1.38;columns:2;column-gap:18px}
+.gl dt{break-inside:avoid}.gl dd{break-inside:avoid}
+@media (max-width:640px){.gl{columns:1}}
+.gl dt{font-weight:600;color:var(--blueprint);margin-top:7px}
+.gl dd{margin:1px 0 0;color:var(--ink-2)}
+
+@media (max-width:640px){.gl4{grid-template-columns:minmax(0,1fr)}}
+.menu-head{display:flex;justify-content:space-between;align-items:center;padding:8px 10px 10px;border-bottom:1px solid var(--rule);margin-bottom:6px}
+.menu-head button{font-family:var(--mono);font-size:20px;line-height:1;width:34px;height:34px;border:1px solid var(--rule);border-radius:4px;background:var(--surface);color:var(--ink-2);cursor:pointer}
+.menu-head button:hover{border-color:var(--blueprint);color:var(--blueprint)}
+.modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:4vh 4vw;background:rgba(16,23,32,.45)}
+.modal.on{display:flex}
+.modal-box{background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow);max-width:1100px;width:100%;max-height:92vh;display:flex;flex-direction:column}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule);font-family:var(--cond);font-weight:600;font-size:15px;color:var(--blueprint)}
+.modal-head button{font-family:var(--mono);font-size:20px;line-height:1;width:34px;height:34px;border:1px solid var(--rule);border-radius:4px;background:var(--surface);color:var(--ink-2);cursor:pointer}
+.modal-body{padding:14px 18px 20px;overflow:auto;font-size:15px}
+.modal-body p,.modal-body li{max-width:none;font-size:15px}
+.modal-body .tw{margin-top:10px}.modal-body .two{margin-top:8px}
+.modal-body .shot img{max-height:60vh;width:auto;max-width:100%}
+/* 4) botão de copiar */
+.code,.term{position:relative}
+.copy{position:absolute;top:6px;right:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:3px 8px;border-radius:3px;border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);cursor:pointer;opacity:.75;z-index:2}
+.copy:hover{opacity:1;border-color:var(--blueprint);color:var(--blueprint)}
+.term .copy{background:#141F2B;border-color:#2B3B4C;color:#9FB1C2}
+.copy.ok{color:var(--go);border-color:var(--go)}
+.gterm{text-decoration:underline dotted var(--blueprint-2);text-decoration-thickness:1.5px;text-underline-offset:3px;cursor:help}
+.gterm:hover,.gterm:focus{background:var(--blueprint-soft);outline:none;border-radius:2px}
+.gpop{position:fixed;z-index:70;max-width:340px;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-left:3px solid var(--blueprint);border-radius:4px;box-shadow:var(--shadow);padding:10px 12px;font-family:var(--cond);font-size:13.5px;line-height:1.45;display:none;pointer-events:none}
+.gpop.on{display:block}
+.gpop b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--blueprint);margin-bottom:4px}
+@media (hover:none){.gpop{pointer-events:auto}}
+.slide .check{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.slide .check .check-foot{grid-column:1/-1}
+.slide .check-item{border-right:1px solid var(--rule-2)}.slide .check-item:nth-child(even){border-right:0}
+.slide .refs{columns:2;column-gap:28px}.slide .refs li{break-inside:avoid}
+#s06 .tw td,#s06 .tw th{padding:6px 10px}
+@media (max-width:900px){.slide .check{grid-template-columns:minmax(0,1fr)}.slide .check-item{border-right:0}.slide .refs{columns:1}}
+
+/* extras deste manual */
+.gantt{display:grid;grid-template-columns:150px repeat(12,minmax(0,1fr));gap:4px 0;font-family:var(--cond);font-size:12.5px;align-items:center}
+.gantt .gl{padding-right:8px;color:var(--ink-2);text-align:right}
+.gantt .gm{font-family:var(--mono);font-size:10px;color:var(--ink-3);text-align:center;border-bottom:1px solid var(--rule);padding-bottom:3px}
+.gantt .gb{height:14px;border-radius:2px;background:var(--blueprint);margin:3px 1px}
+.gantt .gb.s{background:var(--signal)}.gantt .gb.g{background:var(--go)}.gantt .gb.a{background:var(--amber)}
+.cycle{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.cycle .node{align-items:center;text-align:center}
+.struct{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.struct>div{border:1px solid var(--rule);border-radius:4px;background:var(--surface);padding:10px 12px}
+.struct h5{margin:0 0 6px;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--blueprint)}
+.struct ol,.struct ul{margin:0;padding-left:16px}.struct li{font-family:var(--cond);font-size:13px;line-height:1.35;margin:2px 0}
+@media (max-width:900px){.struct{grid-template-columns:minmax(0,1fr)}.gantt{grid-template-columns:110px repeat(12,minmax(0,1fr))}}
+
+/* lupa: clique na captura para ampliar */
+.shot img{cursor:zoom-in}
+.lightbox{position:fixed;inset:0;z-index:80;background:rgba(10,14,20,.88);display:none;align-items:center;justify-content:center;padding:3vh 3vw;cursor:zoom-out}
+.lightbox.on{display:flex}
+.lightbox img{max-width:94vw;max-height:88vh;width:auto;height:auto;border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.6);background:#fff}
+.lightbox figcaption{position:absolute;left:50%;bottom:1.6vh;transform:translateX(-50%);max-width:90vw;font-family:var(--cond);font-size:13.5px;color:#E3E9EF;text-align:center;line-height:1.4;padding:6px 12px;background:rgba(10,14,20,.6);border-radius:4px}
+.lightbox .lb-close{position:absolute;top:12px;right:14px;width:40px;height:40px;border-radius:4px;border:1px solid rgba(255,255,255,.3);background:rgba(10,14,20,.5);color:#fff;font:20px/1 var(--mono);cursor:pointer}
+.lightbox .lb-hint{position:absolute;top:18px;left:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+@media print{.lightbox{display:none!important}}
+</style>
+</head>
+<body>
+
+<div class="prog" id="prog"></div>
+<div class="scrim" id="scrim"></div>
+<div class="gpop" id="gpop" role="tooltip"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="modal-box"><div class="modal-head"><span id="modal-title">detalhes</span><button type="button" id="modal-close" aria-label="Fechar">×</button></div><div class="modal-body" id="modal-body"></div></div></div>
+<nav class="menu" id="menu" aria-label="Sumário"><div class="menu-head"><span class="brand">MirandasTech</span><button type="button" id="menuclose" aria-label="Fechar sumário">×</button></div><div id="menulist"></div></nav>
+<div class="navbtn"><button class="menubtn" id="menubtn" aria-label="Abrir sumário">☰</button><button id="prev" aria-label="Slide anterior">↑</button><button id="next" aria-label="Próximo slide">↓</button><span class="cnt"><b id="cur">1</b>/<span id="tot">–</span></span></div>
+
+
+<main id="deck">
+<!-- ===================== CAPA ===================== -->
+<section class="slide cover" id="s00" data-title="Capa">
+  <div class="inner">
+    <span class="brand rv">MirandasTech · Manual profissional</span>
+    <h1 class="rv">LaTeX com Overleaf e abnTeX2: passo a passo</h1>
+    <p class="lede rv">Entender o que o LaTeX é e quando vale a pena, criar a conta e o primeiro projeto no Overleaf, usar a galeria de modelos, compartilhar e compilar, formatar o trabalho nas normas da ABNT com o abnTeX2, levar as referências do Zotero para o <code>.bib</code> com o Better BibTeX, compilar no próprio computador com o TinyTeX e conferir as citações com três scripts — <strong>com ferramentas gratuitas e cada fato datado</strong>.</p>
+    <div class="cover-meta rv">
+      <div><b>Série</b><span>Manuais MirandasTech · pesquisa científica</span></div>
+      <div><b>Versão</b><span>1.0 · setembro de 2026</span></div>
+      <div><b>Formato</b><span><span id="nslides">–</span> slides</span></div>
+      <div><b>Licença</b><span>CC BY 4.0 — cite a fonte</span></div>
+    </div>
+  </div>
+  <div class="hint">role para começar</div>
+</section>
+
+<section class="slide" id="s01" data-title="Para quem é e o que você vai aprender">
+  <div class="inner">
+    <div class="kicker-part rv">Como usar<span>cada slide é um passo que você executa no navegador ou no terminal</span></div>
+    <h2 class="rv">Para quem é — e o que você vai saber fazer ao final</h2>
+    <p class="lead rv">Este manual é para quem precisa escrever um <strong>TCC, uma dissertação, uma tese, um artigo ou um projeto de pesquisa</strong> em <span class="gterm" tabindex="0" data-t="LaTeX" data-d="Sistema de preparação de documentos sobre o TeX (Lamport): classes, pacotes e comandos que separam conteúdo de forma; software livre sob a LPPL.">LaTeX</span> — no <span class="gterm" tabindex="0" data-t="Overleaf" data-d="Editor LaTeX colaborativo on-line (Digital Science): compila na nuvem, galeria de modelos, compartilhamento; planos gratuito e pagos.">Overleaf</span> ou no próprio computador — e quer o resultado nas normas da ABNT sem ajustar margem, sumário e referência à mão. Não exige programação: todo <span class="gterm" tabindex="0" data-t="Comando (macro)" data-d="Instrução iniciada por \, com argumentos entre chaves e opções entre colchetes.">comando</span> está pronto para copiar. O manual não faz login no <span class="gterm" tabindex="0" data-t="Overleaf" data-d="Editor LaTeX colaborativo on-line (Digital Science): compila na nuvem, galeria de modelos, compartilhamento; planos gratuito e pagos.">Overleaf</span>: as páginas públicas aparecem em capturas, e o editor logado é descrito pela documentação oficial (docs.overleaf.com), com os nomes exatos dos botões.</p>
+    <div class="two rv">
+      <div>
+        <h4>Ao final, você vai conseguir</h4>
+        <ul class="bul">
+          <li><strong>Explicar</strong> o que é o <span class="gterm" tabindex="0" data-t="LaTeX" data-d="Sistema de preparação de documentos sobre o TeX (Lamport): classes, pacotes e comandos que separam conteúdo de forma; software livre sob a LPPL.">LaTeX</span>, como um <code>.tex</code> vira PDF e quando ele vale a pena — e quando não (Knauff e Nejasmic, 2014).</li>
+          <li><strong>Criar</strong> a conta e o primeiro projeto no Overleaf, abrir um modelo da galeria com «Open as <span class="gterm" tabindex="0" data-t="Template" data-d="Modelo pronto da galeria do Overleaf ou do abnTeX2; «Open as Template» cria uma cópia sua.">Template</span>», compartilhar, comentar e ler o <span class="gterm" tabindex="0" data-t="Log (arquivo .log)" data-d="Registro completo de uma compilação, com erros e avisos; um .log antigo pode fazer o latexmk pular passagens.">log</span> de erros.</li>
+          <li><strong>Escrever</strong> um documento em português correto: <code>fontenc</code> T1, <code>babel</code> brazilian, UTF-8, seções, figuras, tabelas, matemática e referências cruzadas.</li>
+          <li><strong>Formatar</strong> o trabalho com o <span class="gterm" tabindex="0" data-t="abnTeX2" data-d="Suíte brasileira: a classe abntex2 (sobre a memoir) e o pacote abntex2cite; versão 1.9.7 (2018).">abnTeX2</span>: capa, folha de rosto, resumo, listas, sumário, capítulos, referências, apêndices e anexos.</li>
+          <li><strong>Citar</strong> com o <code>abntex2cite</code> (<code>\cite</code>, <code>\citeonline</code>; estilos <code>alf</code> e <code>num</code>) a partir de um <code>.bib</code> exportado do Zotero pelo <span class="gterm" tabindex="0" data-t="Better BibTeX" data-d="Plugin do Zotero que gera chaves de citação estáveis, fixa chaves e exporta o .bib com «Keep updated».">Better BibTeX</span>.</li>
+          <li><strong>Compilar</strong> no Overleaf ou localmente (<span class="gterm" tabindex="0" data-t="TinyTeX" data-d="TeX Live enxuto (152–210 MB no padrão) que instala em ~/.TinyTeX e cresce com tlmgr install; o usado na demonstração.">TinyTeX</span> + <code>latexmk</code>) e rodar <code>novo_trabalho.py</code>, <code>compilar.sh</code> e <code>checar_citacoes.py</code>.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Nomes de menu e de botão são os da interface pública observada e da documentação oficial em 09/09/2026; quando a sua tela divergir, vale a tela. Os números marcados «na demonstração deste manual» vieram de uma instalação local (<span class="gterm" tabindex="0" data-t="TinyTeX" data-d="TeX Live enxuto (152–210 MB no padrão) que instala em ~/.TinyTeX e cresce com tlmgr install; o usado na demonstração.">TinyTeX</span> + <span class="gterm" tabindex="0" data-t="abnTeX2" data-d="Suíte brasileira: a classe abntex2 (sobre a memoir) e o pacote abntex2cite; versão 1.9.7 (2018).">abnTeX2</span>) em que os modelos foram compilados de verdade nessa data.</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Adotar o LaTeX esperando escrever mais rápido.</strong> No experimento de Knauff e Nejasmic (2014), usuários de LaTeX foram mais lentos, escreveram menos e erraram mais que usuários do Word nas tarefas propostas. O ganho está em documentos longos, com muita matemática, muitas referências e normas rígidas — não em velocidade.</p></div>
+        <div class="note"><span class="blabel">Manuais irmãos</span><p>Este manual cuida da <em>escrita em LaTeX</em>. Os passos vizinhos estão nos manuais de origem: <a href="https://zotero.mirandastech.com.br/">Zotero</a> (a biblioteca que gera o <code>.bib</code>), <a href="https://metodologia.mirandastech.com.br/">Metodologia da pesquisa científica</a> (a estrutura NBR 14724 e NBR 15287), <a href="https://prisma.mirandastech.com.br/">Revisão sistemática com PRISMA 2020</a> e <a href="https://busca.mirandastech.com.br/">Busca em bases científicas</a> (o conteúdo), <a href="https://manual.mirandastech.com.br/">Uso de IA na pesquisa científica</a> (declarar o AI Assistant do Overleaf) e <a href="https://plugin.mirandastech.com.br/">Plugin Pesquisa MirandasTech</a> (o Pesquisador conduz a fase 8, «Escrita ABNT»). O hub que reúne todos: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s02" data-title="Mapa: do .tex ao PDF">
+  <div class="inner">
+    <div class="kicker-part rv">Introdução<span>o roteiro do manual segue a ordem de um trabalho</span></div>
+    <h2 class="rv">Mapa: do <code>.tex</code> ao PDF — e onde cada parte do manual entra</h2>
+    <div class="flow rv">
+      <div class="node"><span class="nn">1</span><span class="nt">Conteúdo</span><span class="nd">Pergunta, método, busca e leitura prontos (manuais de Metodologia, Busca e PRISMA)</span></div>
+      <div class="node"><span class="nn">2</span><span class="nt">Referências</span><span class="nd">Biblioteca no Zotero; <span class="gterm" tabindex="0" data-t="Better BibTeX" data-d="Plugin do Zotero que gera chaves de citação estáveis, fixa chaves e exporta o .bib com «Keep updated».">Better BibTeX</span> exporta o <code>.bib</code> com chaves estáveis e «Keep updated»</span></div>
+      <div class="node"><span class="nn">3</span><span class="nt">Modelo</span><span class="nd">abnTeX2 canônico, modelo da instituição ou galeria do Overleaf; <code>novo_trabalho.py</code> preenche os dados</span></div>
+      <div class="node"><span class="nn">4</span><span class="nt">Escrever</span><span class="nd"><span class="gterm" tabindex="0" data-t="Preâmbulo" data-d="Tudo entre \documentclass e \begin{document}: pacotes e definições; nada dele aparece no PDF.">Preâmbulo</span>, capítulos em <code>\include</code>, figuras, tabelas, <code>\cite</code> e <code>\ref</code></span></div>
+      <div class="node"><span class="nn">5</span><span class="nt">Compilar</span><span class="nd">«Recompile» no Overleaf ou <code>compilar.sh</code>: <span class="gterm" tabindex="0" data-t="pdfLaTeX" data-d="Motor padrão; aceita .png, .jpg e .pdf e converte .eps; precisa de fontenc T1 para acentos reais.">pdflatex</span> → <span class="gterm" tabindex="0" data-t="BibTeX" data-d="Programa que lê o .bib e gera a lista de referências no estilo escolhido; é o que o abntex2cite usa.">bibtex</span> → makeindex → <span class="gterm" tabindex="0" data-t="pdfLaTeX" data-d="Motor padrão; aceita .png, .jpg e .pdf e converte .eps; precisa de fontenc T1 para acentos reais.">pdflatex</span></span></div>
+      <div class="node"><span class="nn">6</span><span class="nt">Conferir</span><span class="nd"><code>checar_citacoes.py</code>; ler o <code>.log</code>; conferir as edições das normas com a biblioteca</span></div>
+      <div class="node gate"><span class="nn">7</span><span class="nt">Entregar</span><span class="nd">PDF final; <code>.docx</code> via pandoc se o programa exigir Word; uso de IA declarado</span></div>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:150px">Parte</th><th>O que cobre</th><th style="width:130px">Passos</th></tr></thead><tbody>
+        <tr><td><b>1 O que é e quando usar</b></td><td>LaTeX, <span class="gterm" tabindex="0" data-t="TeX" data-d="Sistema de composição tipográfica de Donald E. Knuth; a base sobre a qual o LaTeX é construído.">TeX</span> e o fluxo · quando vale a pena · Overleaf ou instalação local · anatomia de um documento · comandos do dia a dia · português e motores</td><td>Passos 1 e 4</td></tr>
+        <tr><td><b>2 Overleaf passo a passo</b></td><td>Conta · primeiro projeto · o editor · galeria de modelos · enviar e baixar · compartilhar e histórico · planos · erros e logs · IA</td><td>Passos 3 a 6</td></tr>
+        <tr><td><b>3 abnTeX2</b></td><td>O que é e normas · instalar · o modelo canônico · citações com <span class="gterm" tabindex="0" data-t="abntex2cite" data-d="Pacote de citações e referências ABNT do abnTeX2; estilos alf (autor-data) e num (numérico).">abntex2cite</span> · compilar · artigo e projeto · customizações e biblatex-abnt · erros</td><td>Passos 3 a 6</td></tr>
+        <tr><td><b>4 Zotero, scripts e local</b></td><td>Better BibTeX · <code>.bib</code> no Overleaf · <code>novo_trabalho.py</code> · <code>compilar.sh</code> · <code>checar_citacoes.py</code> · TinyTeX · VS Code · pandoc · Git</td><td>Passos 2, 5, 6 e 7</td></tr>
+        <tr><td><b>5 Fechamento</b></td><td>Plugin · erros comuns · checklist · glossário · referências · como citar</td><td>—</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Como ler</span><p>Quem nunca abriu um <code>.tex</code> começa na Parte 1. Quem já escreve em LaTeX e quer o Overleaf sem surpresas vai à Parte 2. Quem precisa do trabalho nas normas da ABNT vai à Parte 3. A Parte 4 é para quem quer o <code>.bib</code> vindo do Zotero, os scripts e a compilação no próprio computador.</p></div>
+        <div class="note"><span class="blabel">Convenções</span><p>Nomes de menu e de botão entre «aspas angulares». Comandos LaTeX e de terminal em blocos com botão «copiar». Capturas em 1920 × 938 (terminal em 1920 × 620 a 640), feitas em 09/09/2026. Onde não houve captura (o editor logado do Overleaf), o slide diz «tela do editor conforme a documentação oficial». Nunca há senha neste manual nem em nenhum script dele.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 1 ===================== -->
+<section class="slide divider" id="s03" data-title="Parte 1 · O que é e quando usar"><div class="inner"><div class="kicker-part rv">Parte 1<span>O que é e quando usar</span></div><h2 class="rv">LaTeX, TeX e o fluxo até o PDF; quando vale a pena; Overleaf ou instalação local; anatomia de um documento; comandos do dia a dia; português correto</h2><p class="rv">Antes de abrir o Overleaf: o que o LaTeX é, o que a evidência diz sobre ele, como se escolhe entre a nuvem e o computador, e o mínimo de comandos para escrever um documento em português que compile.</p></div><div class="num">01</div></section>
+
+<section class="slide" id="s04" data-title="LaTeX, TeX e o fluxo .tex → PDF">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e quando usar<span>1 de 6 · latex-project.org · TeX FAQ · overleaf.com/learn</span></div>
+    <h2 class="rv">LaTeX, TeX e o fluxo: um arquivo de texto com comandos, um motor que o lê, um PDF no fim</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_09_learn_30min.jpg" width="1920" height="938" alt="Página Learn LaTeX in 30 minutes do Overleaf Learn, com o índice do tutorial e o primeiro documento de exemplo"></div><figcaption><b>Figura 1</b> «Learn LaTeX in 30 minutes», no Overleaf Learn (captura de 09/09/2026): o tutorial gratuito que este manual segue nos comandos básicos — documento mínimo, preâmbulo, formatação, figuras, tabelas, matemática e referências.</figcaption></figure>
+      <div>
+        <p class="lead"><strong><span class="gterm" tabindex="0" data-t="TeX" data-d="Sistema de composição tipográfica de Donald E. Knuth; a base sobre a qual o LaTeX é construído.">TeX</span></strong> é o sistema de composição tipográfica de Donald E. Knuth (TeX FAQ; Knuth, 1986). <strong>LaTeX</strong> é o «sistema de preparação de documentos para alta qualidade tipográfica» construído sobre ele (latex-project.org; Lamport, 1994): software livre sob a LaTeX Project Public License (LPPL), disponível para Linux, macOS, Windows e on-line. Você escreve texto puro com comandos num arquivo <code>.tex</code>; um <em><span class="gterm" tabindex="0" data-t="Motor" data-d="Programa que lê o .tex e produz o PDF: pdfLaTeX, XeLaTeX ou LuaLaTeX.">motor</span></em> lê o arquivo e produz o PDF.</p>
+        <div class="flow">
+          <div class="node"><span class="nn">1</span><span class="nt"><code>.tex</code></span><span class="nd">Texto puro com comandos (<code>\section</code>, <code>\cite</code>…), editado em qualquer editor</span></div>
+          <div class="node"><span class="nn">2</span><span class="nt"><span class="gterm" tabindex="0" data-t="Motor" data-d="Programa que lê o .tex e produz o PDF: pdfLaTeX, XeLaTeX ou LuaLaTeX.">Motor</span></span><span class="nd">pdfLaTeX, <span class="gterm" tabindex="0" data-t="XeLaTeX" data-d="Motor com UTF-8 nativo e fontes TrueType/OpenType do sistema via fontspec; aceita pstricks.">XeLaTeX</span> ou <span class="gterm" tabindex="0" data-t="LuaLaTeX" data-d="Motor com UTF-8 nativo, fontes do sistema e a linguagem Lua dentro do documento.">LuaLaTeX</span>; mais <span class="gterm" tabindex="0" data-t="BibTeX" data-d="Programa que lê o .bib e gera a lista de referências no estilo escolhido; é o que o abntex2cite usa.">bibtex</span> ou <span class="gterm" tabindex="0" data-t="Biber" data-d="Processador bibliográfico do biblatex, com UTF-8 completo.">biber</span> para as referências e makeindex para índices</span></div>
+          <div class="node"><span class="nn">3</span><span class="nt">Auxiliares</span><span class="nd"><code>.aux</code>, <code>.log</code>, <code>.bbl</code>, <code>.toc</code>: é neles que sumário e referências cruzadas se resolvem — por isso se compila mais de uma vez</span></div>
+          <div class="node gate"><span class="nn">4</span><span class="nt">PDF</span><span class="nd">O único arquivo que se entrega; o <code>.tex</code> e o <code>.bib</code> ficam no projeto</span></div>
+        </div>
+        <div class="tw"><table><thead><tr><th style="width:170px">O que muda em relação ao Word</th><th>Consequência</th></tr></thead><tbody>
+          <tr><td><b>Conteúdo separado da forma</b></td><td>A <span class="gterm" tabindex="0" data-t="Classe" data-d="A primeira linha do documento (article, report, book, abntex2): define a estrutura e a forma geral.">classe</span> e os pacotes decidem margens, fontes e numeração; você escreve o texto</td></tr>
+          <tr><td><b>Referências automáticas</b></td><td>Sumário, listas, citações e referências vêm de <code>\label</code>, <code>\ref</code>, <code>\cite</code> e do <code>.bib</code></td></tr>
+          <tr><td><b>Texto puro</b></td><td>Funciona com controle de versão e com qualquer editor — a recomendação de Wilson et al. (2017)</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s05" data-title="Quando vale a pena: o que a evidência diz">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e quando usar<span>2 de 6 · Knauff e Nejasmic (2014); Wilson et al. (2017); Cherem (2015); Santos, Lima e Rodrigues (2018)</span></div>
+    <h2 class="rv">Quando vale a pena: documentos longos, matemática, referências e normas — não velocidade</h2>
+    <div class="two rv">
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:230px">Estudo</th><th>O que encontrou</th><th style="width:210px">O que muda para você</th></tr></thead><tbody>
+          <tr><td><b>Knauff e Nejasmic (2014)</b>, PLoS ONE</td><td>Num experimento controlado, usuários de LaTeX foram mais lentos, escreveram menos e cometeram mais erros que usuários do Word nas tarefas propostas</td><td>Não escolha o LaTeX para ganhar tempo; escolha pelo tipo de documento</td></tr>
+          <tr><td><b>Wilson et al. (2017)</b>, PLoS Comput. Biol.</td><td>«Good enough practices»: manuscritos em texto simples e sob controle de versão</td><td>O <code>.tex</code> é texto simples: Git e diff funcionam (Parte 4)</td></tr>
+          <tr><td><b>Cherem (2015)</b>, Informação &amp; Informação</td><td>Uso de LaTeX em textos acadêmicos no Brasil ainda limitado; depende de apoio institucional</td><td>Procure o modelo e o apoio da sua instituição antes de começar do zero</td></tr>
+          <tr><td><b>Santos, Lima e Rodrigues (2018)</b>, InCID</td><td>Bibliotecários construindo um modelo ABNT no ShareLaTeX (hoje Overleaf) para normalizar trabalhos</td><td>A biblioteca da instituição é aliada: pergunte se há modelo oficial</td></tr>
+          <tr><td><b>Zheng (2023)</b>, SIGITE</td><td>Oficina prática de escrita acadêmica com LaTeX</td><td>Aprende-se fazendo: crie o primeiro projeto hoje</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <div class="compare">
+          <div><div class="cmp-h">Vale a pena</div><ul>
+            <li>Dissertação, tese ou livro com dezenas de figuras, tabelas e referências cruzadas</li>
+            <li>Muita matemática: equações numeradas, símbolos, alinhamento</li>
+            <li>Centenas de referências vindas do Zotero, no estilo ABNT, sem retrabalho</li>
+            <li>Norma rígida (ABNT, periódico, evento) com <span class="gterm" tabindex="0" data-t="Classe" data-d="A primeira linha do documento (article, report, book, abntex2): define a estrutura e a forma geral.">classe</span> ou modelo pronto</li>
+            <li>Vários autores editando o mesmo texto com histórico</li>
+          </ul></div>
+          <div><div class="cmp-h">Pense duas vezes</div><ul>
+            <li>Texto curto, sem fórmulas nem muitas citações</li>
+            <li>Orientador ou programa que exige revisão em Word com controle de alterações</li>
+            <li>Prazo curto e nenhuma experiência prévia: a curva de aprendizado é real</li>
+            <li>Modelo institucional que só existe em <code>.docx</code> e não pode ser reproduzido</li>
+          </ul></div>
+        </div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Decida pelo documento, não pela ferramenta. Se a resposta for LaTeX, comece por um modelo pronto (abnTeX2 ou o da instituição) e pelo Overleaf — assim o primeiro PDF sai no primeiro dia. Se o programa exigir Word na entrega, o pandoc converte (Parte 4), com perdas; combine isso antes.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s06" data-title="Overleaf ou instalação local">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e quando usar<span>3 de 6 · tug.org · miktex.org · yihui.org/tinytex · capturas de 09/09/2026</span></div>
+    <h2 class="rv">Overleaf ou instalação local: TeX Live, MiKTeX e TinyTeX — e os editores</h2>
+    <div class="three rv">
+      <figure><div class="shot"><img src="capturas/lx_23_texlive.jpg" width="1920" height="938" alt="Site do TeX Live (tug.org/texlive) com a apresentação da distribuição e os links de instalação"></div><figcaption><b>Figura 2</b> TeX Live (captura de 09/09/2026): a distribuição de referência, anual, instalada com <code>install-tl</code> e gerida com <code>tlmgr</code>; o Overleaf anunciou o TeX Live 2026 em 18/08/2026.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/lx_24_miktex.jpg" width="1920" height="938" alt="Site do MiKTeX com o botão de download e a descrição da instalação de pacotes sob demanda"></div><figcaption><b>Figura 3</b> MiKTeX (captura de 09/09/2026): Windows, macOS e Linux; instala os pacotes sob demanda, na primeira compilação que os pede.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/lx_22_tinytex.jpg" width="1920" height="938" alt="Site do TinyTeX (yihui.org/tinytex) com a descrição da distribuição leve baseada no TeX Live e os comandos de instalação"></div><figcaption><b>Figura 4</b> TinyTeX (captura de 09/09/2026): TeX Live enxuto — de 1–24 MB (TinyTeX-0) a 1,7–1,9 GB (TinyTeX-2, completo); o padrão tem 152–210 MB e instala em <code>~/.TinyTeX</code>. É o usado na demonstração deste manual (Parte 4).</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:150px">Opção</th><th>Vantagens</th><th>Limites</th></tr></thead><tbody>
+        <tr><td><b>Overleaf</b> (nuvem)</td><td>Nada a instalar; compila na nuvem; galeria de modelos; colaboração; histórico; abnTeX2 já disponível</td><td>Plano gratuito: 10 s de compilação, 1 colaborador por projeto, histórico de 24 h; exige internet</td></tr>
+        <tr><td><b><span class="gterm" tabindex="0" data-t="TeX Live" data-d="Distribuição de referência, anual, do TeX Users Group; instalada com install-tl e gerida com tlmgr.">TeX Live</span></b></td><td>Completo; anual; <code>install-tl</code> e <code>tlmgr</code>; base do MacTeX e do TinyTeX</td><td>Instalação grande</td></tr>
+        <tr><td><b><span class="gterm" tabindex="0" data-t="MiKTeX" data-d="Distribuição para Windows, macOS e Linux que instala pacotes sob demanda.">MiKTeX</span></b></td><td>Pacotes sob demanda; Windows, macOS e Linux; Package Manager</td><td>Precisa de rede na primeira compilação que pede um <span class="gterm" tabindex="0" data-t="Pacote" data-d="Extensão carregada com \usepackage (graphicx, hyperref, babel, abntex2cite…).">pacote</span></td></tr>
+        <tr><td><b>TinyTeX</b></td><td>Leve; um <span class="gterm" tabindex="0" data-t="Comando (macro)" data-d="Instrução iniciada por \, com argumentos entre chaves e opções entre colchetes.">comando</span> instala; <code>tlmgr install</code> traz só o que você usa</td><td>Repositório sem documentação dos pacotes (<code>tlmgr option docfiles 1</code> faz o download falhar)</td></tr>
+        <tr><td><b>Editores locais</b></td><td>TeXstudio, Texmaker, TeXworks, Kile, LyX (wiki do abnTeX2); VS Code + LaTeX Workshop (compila, sincroniza o PDF, autocompleta, mostra erros)</td><td>Cada um tem a própria configuração de compilação</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Comece no Overleaf: o primeiro PDF sai sem instalar nada. Instale uma <span class="gterm" tabindex="0" data-t="Distribuição" data-d="Conjunto instalável de motores, pacotes e ferramentas: TeX Live, MacTeX, MiKTeX, TinyTeX.">distribuição</span> local quando o projeto estourar o tempo de compilação gratuito, quando precisar trabalhar sem internet ou quando quiser Git e scripts — e leve o projeto de um lado para o outro pelo <code>.zip</code> (Parte 2) ou pelo Git (Parte 4).</p></div>
+        <div class="note"><span class="blabel">Na demonstração deste manual (09/09/2026)</span><p>TinyTeX instalado no Linux com um comando (download de 51,6 MB); <code>pdfTeX 3.141592653-2.6-1.40.29 (TeX Live 2026)</code>; <code>tlmgr revision 79639</code>; abnTeX2, biblatex-abnt, babel-portuges, <span class="gterm" tabindex="0" data-t="latexmk" data-d="Ferramenta que repete pdflatex, bibtex/biber e makeindex até o documento estabilizar; o Overleaf e o compilar.sh a usam.">latexmk</span> e os demais pacotes instalados com <code>tlmgr</code> (lista na Parte 4).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s07" data-title="Anatomia de um documento">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e quando usar<span>4 de 6 · Overleaf Learn, «Learn LaTeX in 30 minutes»</span></div>
+    <h2 class="rv">Anatomia de um documento: classe, preâmbulo e corpo — um documento mínimo em português</h2>
+    <div class="two rv">
+      <div>
+        <div class="code"><div class="code-head">main.tex — documento mínimo em português (compila com pdfLaTeX)</div><pre>\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}        % acentos reais no PDF (e cópia correta do texto)
+\usepackage[utf8]{inputenc}     % opcional desde 2018: UTF-8 já é o padrão de entrada
+\usepackage[brazilian]{babel}   % «Resumo», «Sumário», hifenização em português
+\usepackage{graphicx}           % figuras
+\usepackage{hyperref}           % links no PDF; carregar por último (com exceções)
+
+\begin{document}
+
+\section{Introdução}
+A manutenção preditiva usa dados de sensores para antecipar falhas
+\cite{knauff2014}. A Seção~\ref{sec:metodo} descreve o método.
+
+\section{Método}\label{sec:metodo}
+Texto do método.
+
+\bibliographystyle{plain}       % no abnTeX2 o estilo vem do abntex2cite (Parte 3)
+\bibliography{referencias}      % lê referencias.bib
+
+\end{document}</pre></div>
+      </div>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:150px">Parte</th><th>O que é</th></tr></thead><tbody>
+          <tr><td><b><code>\documentclass</code></b></td><td>A primeira linha: a classe (<code>article</code>, <code>report</code>, <code>book</code>, <code>abntex2</code>…) e as opções entre colchetes (<code>12pt</code>, <code>a4paper</code>)</td></tr>
+          <tr><td><b><span class="gterm" tabindex="0" data-t="Preâmbulo" data-d="Tudo entre \documentclass e \begin{document}: pacotes e definições; nada dele aparece no PDF.">Preâmbulo</span></b></td><td>Tudo entre <code>\documentclass</code> e <code>\begin{document}</code>: <code>\usepackage[opções]{pacote}</code> e definições. Nada aqui aparece no PDF</td></tr>
+          <tr><td><b>Corpo</b></td><td>Entre <code>\begin{document}</code> e <code>\end{document}</code>: o texto, com seções, figuras, tabelas e citações</td></tr>
+          <tr><td><b>Comentário</b></td><td>Tudo depois de <code>%</code> na linha é ignorado</td></tr>
+          <tr><td><b>Comando</b></td><td>Começa com <code>\</code>; argumento obrigatório entre chaves <code>{}</code>, opcional entre colchetes <code>[]</code></td></tr>
+          <tr><td><b><span class="gterm" tabindex="0" data-t="Ambiente" data-d="Par \begin{nome} … \end{nome} (figure, table, itemize, equation, resumo).">Ambiente</span></b></td><td>Par <code>\begin{nome}</code> … <code>\end{nome}</code>: <code>figure</code>, <code>table</code>, <code>itemize</code>, <code>equation</code></td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Salve o <code>.tex</code> e o <code>.bib</code> em UTF-8 (o Overleaf já faz isso). Compile duas vezes quando mudar seções ou rótulos: a primeira grava os números no <code>.aux</code>, a segunda os lê. Com <code>latexmk -pdf main.tex</code> — ou o «Recompile» do Overleaf — isso é automático.</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Esquecer o <code>fontenc</code> T1.</strong> O PDF parece certo, mas o «ç» e o «ã» viram caracteres compostos: a busca no PDF e o copiar-colar quebram. Com <span class="gterm" tabindex="0" data-t="XeLaTeX" data-d="Motor com UTF-8 nativo e fontes TrueType/OpenType do sistema via fontspec; aceita pstricks.">XeLaTeX</span> ou <span class="gterm" tabindex="0" data-t="LuaLaTeX" data-d="Motor com UTF-8 nativo, fontes do sistema e a linguagem Lua dentro do documento.">LuaLaTeX</span> o T1 não é necessário (slide «Português correto e motores»).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s08" data-title="Comandos que você usa todo dia">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e quando usar<span>5 de 6 · Overleaf Learn: «Learn LaTeX in 30 minutes», «Cross referencing…», «Management in a large project»</span></div>
+    <h2 class="rv">Comandos que você usa todo dia: seções, listas, figuras, tabelas, matemática, referências cruzadas e <code>hyperref</code></h2>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:150px">Para</th><th>Comando</th></tr></thead><tbody>
+        <tr><td><b>Formatar</b></td><td><code>\textbf{}</code> negrito · <code>\textit{}</code> itálico · <code>\emph{}</code> ênfase · <code>\underline{}</code></td></tr>
+        <tr><td><b>Estruturar</b></td><td><code>\section{}</code>, <code>\subsection{}</code>, <code>\subsubsection{}</code> (com <code>*</code>, sem número) · <code>\tableofcontents</code> gera o sumário</td></tr>
+        <tr><td><b>Listar</b></td><td>Ambientes <code>itemize</code> (marcadores), <code>enumerate</code> (numerada), <code>description</code>; cada item com <code>\item</code></td></tr>
+        <tr><td><b>Figuras</b></td><td><code>\usepackage{graphicx}</code>; <code>\graphicspath{{figuras/}}</code>; <code>\includegraphics[width=0.75\textwidth]{arquivo}</code> dentro de <code>figure</code>, com <code>\caption{}</code> e <code>\label{}</code></td></tr>
+        <tr><td><b>Tabelas</b></td><td><code>tabular{l c r}</code>: colunas com <code>&amp;</code>, linhas com <code>\\</code>, filetes com <code>\hline</code>; dentro de <code>table</code> com <code>\caption</code> e <code>\label</code>; <code>booktabs</code> dá <code>\toprule</code>, <code>\midrule</code>, <code>\bottomrule</code></td></tr>
+        <tr><td><b>Matemática</b></td><td>Na linha: <code>$…$</code> ou <code>\(…\)</code>; destacada: <code>\[…\]</code> ou <code>equation</code>; com <code>amsmath</code>: <code>equation*</code>, <code>\frac{}{}</code>, <code>\sqrt{}</code>, <code>\sum</code>, <code>\int</code></td></tr>
+        <tr><td><b>Referir</b></td><td><code>\label{fig:x}</code> no alvo; <code>\ref{fig:x}</code> dá o número, <code>\pageref{fig:x}</code> a página — compilar duas vezes</td></tr>
+        <tr><td><b>Links</b></td><td><code>hyperref</code>: <code>\url{}</code>, <code>\href{}{}</code>; opções <code>colorlinks</code> ou <code>hidelinks</code>; carregar por último (com exceções)</td></tr>
+        <tr><td><b>Dividir</b></td><td><code>\input{cap1}</code> insere sem página nova (aninhável); <code>\include{cap1}</code> abre página nova, gera <code>.aux</code> próprio e obedece a <code>\includeonly{}</code></td></tr>
+        <tr><td><b>Espaçar</b></td><td><code>parskip</code> (espaço entre parágrafos); <code>setspace</code> com <code>\onehalfspacing</code></td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="code"><div class="code-head">figura e tabela com legenda e rótulo — o padrão que se repete o trabalho inteiro</div><pre>\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{guindaste}
+  \caption{Guindaste de pátio instrumentado.}
+  \label{fig:guindaste}
+\end{figure}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Sensores por equipamento.}
+  \label{tab:sensores}
+  \begin{tabular}{l c r}
+    \toprule
+    Equipamento &amp; Sensores &amp; Amostras/dia \\
+    \midrule
+    Guindaste   &amp; 12       &amp; 86.400 \\
+    Transtêiner &amp; 8        &amp; 43.200 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+A Figura~\ref{fig:guindaste} e a Tabela~\ref{tab:sensores}
+(p.~\pageref{tab:sensores}) resumem a instrumentação.</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Um capítulo por arquivo (<code>capitulos/1-introducao.tex</code>…) incluído com <code>\include</code> no <code>main.tex</code>; figuras numa pasta <code>figuras/</code>; um único <code>.bib</code>. Rótulos com prefixo (<code>fig:</code>, <code>tab:</code>, <code>sec:</code>, <code>eq:</code>) para não colidir. Nunca escreva o número de uma figura à mão.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s09" data-title="Português correto e motores">
+  <div class="inner">
+    <div class="kicker-part rv">O que é e quando usar<span>6 de 6 · docs.overleaf.com · CTAN (babel-portuges v1.2u, 24/01/2026) · FAQ do abnTeX2</span></div>
+    <h2 class="rv">Português correto: <code>fontenc</code> T1, <code>babel</code> brazilian e UTF-8 — e o que muda com XeLaTeX e LuaLaTeX</h2>
+    <div class="two rv">
+      <div>
+        <div class="code"><div class="code-head">preâmbulo — pdfLaTeX (o padrão do Overleaf e do abnTeX2)</div><pre>\usepackage[T1]{fontenc}        % codificação das fontes: acentos reais
+\usepackage[utf8]{inputenc}     % opcional: UTF-8 é o padrão de entrada desde 2018
+\usepackage[brazilian]{babel}   % ou [portuguese]; traduz «Abstract» → «Resumo» e hifeniza
+\usepackage{lmodern}            % fonte Latin Modern com T1 completo</pre></div>
+        <div class="code"><div class="code-head">preâmbulo — XeLaTeX ou LuaLaTeX (fontes do sistema; sem T1)</div><pre>\usepackage{fontspec}           % fontes TrueType/OpenType instaladas no sistema
+\usepackage[brazilian]{babel}   % ou \usepackage{polyglossia} com \setmainlanguage{brazil}</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:120px">Motor</th><th>O que faz</th><th style="width:230px">Quando usar</th></tr></thead><tbody>
+          <tr><td><b>pdfLaTeX</b></td><td>Padrão; aceita .png, .jpg e .pdf, converte .eps</td><td>Quase sempre; é o que o abnTeX2 e os modelos esperam</td></tr>
+          <tr><td><b>XeLaTeX</b></td><td>UTF-8 nativo; fontes TrueType/OpenType via <code>fontspec</code>; aceita pstricks</td><td>Fonte institucional obrigatória (Arial, Times do sistema)</td></tr>
+          <tr><td><b>LuaLaTeX</b></td><td>UTF-8 nativo; fontes do sistema; permite Lua no documento</td><td>Mesmos casos do XeLaTeX; projetos que usam Lua</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Três linhas resolvem o português no pdfLaTeX: <code>fontenc</code> T1, <code>babel</code> brazilian e arquivos em UTF-8. O <span class="gterm" tabindex="0" data-t="Pacote" data-d="Extensão carregada com \usepackage (graphicx, hyperref, babel, abntex2cite…).">pacote</span> <code>babel-portuges</code> (v1.2u, 24/01/2026, no <span class="gterm" tabindex="0" data-t="CTAN" data-d="Comprehensive TeX Archive Network: o repositório de onde as distribuições e o abnTeX2 são obtidos.">CTAN</span>) é o que o babel usa para as duas variantes. No Overleaf, o motor se escolhe em engrenagem → «Compiler»; localmente, <code>compilar.sh main.tex --xelatex</code> (Parte 4).</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Acento no <code>.bib</code> que some ou quebra a ordenação.</strong> O FAQ do abnTeX2 manda manter todos os arquivos em UTF-8 e, em nomes de autor, usar a forma protegida quando preciso: <code>Ara{\'u}jo</code>; sobrenomes compostos ficam juntos com <code>Barbosa{ }Neto</code>. O Better BibTeX faz essas conversões HTML/LaTeX na exportação (Parte 4).</p></div>
+        <div class="note"><span class="blabel">Vocabulário</span><p><em>Codificação de entrada</em> (como o arquivo guarda «ç») e <em>codificação da fonte</em> (como o PDF desenha e indexa «ç») são coisas diferentes: <code>inputenc</code> cuida da primeira, <code>fontenc</code> da segunda. Erros de acento vêm quase sempre da segunda.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 2 ===================== -->
+<section class="slide divider" id="s10" data-title="Parte 2 · Overleaf passo a passo"><div class="inner"><div class="kicker-part rv">Parte 2<span>Overleaf passo a passo</span></div><h2 class="rv">Conta, primeiro projeto, editor, galeria de modelos, enviar e baixar, compartilhar e histórico, planos, erros e logs, IA</h2><p class="rv">As páginas públicas (home, cadastro, login, galeria, planos, documentação) aparecem em capturas de 09/09/2026. O editor logado é descrito pela documentação oficial (docs.overleaf.com), com os nomes exatos dos botões — o manual não faz login e não pede senha.</p></div><div class="num">02</div></section>
+
+<section class="slide" id="s11" data-title="Conta e login">
+  <div class="inner">
+    <div class="kicker-part rv">Overleaf<span>1 de 10 · overleaf.com · capturas de 09/09/2026</span></div>
+    <h2 class="rv">Conta e login: cadastro gratuito por e-mail, Google ou ORCID; entrada também por IEEE e pelo SSO da instituição</h2>
+    <div class="three rv">
+      <figure><div class="shot"><img src="capturas/lx_01_overleaf_home.jpg" width="1920" height="938" alt="Home do Overleaf com o slogan Write like a rocket scientist, os botões de inscrição e o link Log in no topo"></div><figcaption><b>Figura 5</b> A home do Overleaf (captura de 09/09/2026): «Write like a rocket scientist…» — na interface em português, «Escreva como um cientista de foguetes com o Overleaf — o editor LaTeX colaborativo online que qualquer pessoa pode usar»; «Mais de 25 milhões de usuários»; botões «Inscrever-se gratuitamente», «Inscrever-se com Google», «Inscrever-se com ORCID» e «Conectar» (Log in). Parte da Digital Science.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/lx_02_overleaf_registro.jpg" width="1920" height="938" alt="Página de cadastro do Overleaf (Register) com os campos de e-mail e senha e o botão Sign up for free"></div><figcaption><b>Figura 6</b> A página de cadastro (captura de 09/09/2026): e-mail e senha → «Sign up for free». O plano gratuito não pede cartão.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/lx_03_overleaf_login.jpg" width="1920" height="938" alt="Página de login do Overleaf com Log in with Google, Log in with ORCID, Log in with IEEE, e-mail e senha e Work/university single sign-on"></div><figcaption><b>Figura 7</b> A página de login (captura de 09/09/2026): «Log in with Google», «Log in with ORCID», «Log in with IEEE», e-mail e senha, e «Work/university single sign-on». O manual para aqui.</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div>
+        <ol>
+          <li>Abra overleaf.com e clique em «Inscrever-se gratuitamente» (ou «Inscrever-se com Google» / «com ORCID»). Com e-mail: informe e-mail e senha e clique em «Sign up for free»; confirme o e-mail recebido.</li>
+          <li>Para entrar depois: «Conectar» (<span class="gterm" tabindex="0" data-t="Log (arquivo .log)" data-d="Registro completo de uma compilação, com erros e avisos; um .log antigo pode fazer o latexmk pular passagens.">Log</span> in) → e-mail e senha, Google, ORCID, IEEE ou «Work/university single sign-on» quando a instituição tem licença (slide «Planos e preços»).</li>
+          <li>Use o e-mail institucional ou adicione-o depois em «Account Settings»: é por ele que o Overleaf reconhece uma licença da instituição.</li>
+        </ol>
+      </div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>A senha é digitada só na página do Overleaf ou na página de login da sua instituição (SSO). Nunca há senha neste manual, nos scripts nem em qualquer «assistente» que se ofereça a fazer login por você.</p></div>
+        <div class="note"><span class="blabel">Sem login neste manual</span><p>As telas seguintes do editor não foram capturadas; os nomes de botão vêm de docs.overleaf.com, «Your first project» e guias vizinhos, conferidos em 09/09/2026.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s12" data-title="Primeiro projeto: New Project → Recompile">
+  <div class="inner">
+    <div class="kicker-part rv">Overleaf<span>2 de 10 · docs.overleaf.com, «Your first project» · tela do editor conforme a documentação oficial</span></div>
+    <h2 class="rv">Primeiro projeto: «New Project» → «Blank project» ou «Example project» → «Create» → «Recompile»</h2>
+    <div class="two rv">
+      <div>
+        <div class="flow">
+          <div class="node"><span class="nn">1</span><span class="nt">«New Project»</span><span class="nd">No painel de projetos, o botão abre o menu de criação</span></div>
+          <div class="node"><span class="nn">2</span><span class="nt">«Blank project» ou «Example project»</span><span class="nd">Em branco, ou com um documento de exemplo já escrito; também «Upload Project» (.zip) e «Templates»</span></div>
+          <div class="node"><span class="nn">3</span><span class="nt">Nome → «Create»</span><span class="nd">O editor abre com <code>main.tex</code> e o painel do PDF</span></div>
+          <div class="node gate"><span class="nn">4</span><span class="nt">«Recompile»</span><span class="nd">Compila e mostra o PDF ao lado; Ctrl+Enter ou Ctrl+S faz o mesmo</span></div>
+        </div>
+        <div class="tw"><table><thead><tr><th style="width:190px">Ajuste</th><th>Onde fica (conforme a documentação)</th></tr></thead><tbody>
+          <tr><td><b>Documento principal</b></td><td>Ícone de engrenagem → «Compiler» → «Main document»; ou ⋮ ao lado do arquivo → «Set as main document»</td></tr>
+          <tr><td><b>Compilador e <span class="gterm" tabindex="0" data-t="TeX Live" data-d="Distribuição de referência, anual, do TeX Users Group; instalada com install-tl e gerida com tlmgr.">TeX Live</span></b></td><td>Engrenagem → «Compiler» (pdfLaTeX é o padrão; XeLaTeX e LuaLaTeX disponíveis) e «TeX Live version»</td></tr>
+          <tr><td><b>Auto-compile</b></td><td>Menu do «Recompile»: compila «a cada poucos segundos» enquanto você digita</td></tr>
+          <tr><td><b>«Stop on first error»</b></td><td>Mesmo menu: para no primeiro erro em vez de acumular</td></tr>
+          <tr><td><b>«Fast [draft]»</b></td><td>Mesmo menu: pula as imagens para compilar mais rápido</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <div class="code"><div class="code-head">main.tex — troque o conteúdo do «Blank project» por isto e clique em «Recompile»</div><pre>\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage{lipsum}   % texto de enchimento para testar
+
+\begin{document}
+\section{Introdução}
+\lipsum[1]
+\section{Método}
+\lipsum[2]
+\end{document}</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Um projeto por trabalho; o <code>main.tex</code> é o documento principal e os capítulos ficam em arquivos separados incluídos por <code>\include</code>. Se o PDF não atualiza, olhe o ícone de erros ao lado do «Recompile» (slide «Erros e logs») antes de mudar qualquer coisa.</p></div>
+        <div class="note"><span class="blabel">Tela do editor conforme a documentação oficial</span><p>Este slide não tem captura: o manual não fez login. Os nomes «New Project», «Blank project», «Example project», «Create», «Recompile», «Main document» e «Set as main document» são os de docs.overleaf.com em 09/09/2026.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s13" data-title="O editor: Code Editor, Visual Editor, PDF, Menu, atalhos">
+  <div class="inner">
+    <div class="kicker-part rv">Overleaf<span>3 de 10 · docs.overleaf.com e overleaf.com/learn · tela do editor conforme a documentação oficial</span></div>
+    <h2 class="rv">O editor: «Code Editor» e «Visual Editor», o painel do PDF, o «Menu» e os atalhos</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_10_learn_home.jpg" width="1920" height="938" alt="Página Documentation do Overleaf Learn com as seções de guias: primeiros passos, matemática, figuras e tabelas, estrutura, referências e citações, fontes, apresentações, idiomas"></div><figcaption><b>Figura 8</b> A página «Documentation» do Overleaf Learn (captura de 09/09/2026): guias de primeiros passos, matemática, figuras e tabelas, estrutura, referências e citações, fontes, apresentações e idiomas. A documentação do produto fica em docs.overleaf.com (Getting started, Using Overleaf, Accounts, Admins, LaTeX help, Resolving issues).</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:170px">Elemento</th><th>O que faz (conforme a documentação)</th></tr></thead><tbody>
+          <tr><td><b>«Code Editor»</b></td><td>O código LaTeX, com realce, autocompletar e verificação de código</td></tr>
+          <tr><td><b>«Visual Editor»</b></td><td>«Rich-text, Word-like interface»: mostra títulos, negrito e listas formatados; o arquivo continua sendo <code>.tex</code></td></tr>
+          <tr><td><b>Painel do PDF</b></td><td>À direita; atualiza a cada «Recompile»; ícone de download ao lado do botão</td></tr>
+          <tr><td><b>«Menu»</b></td><td>«Download as PDF», «Download as source (.zip)», configurações do projeto e da conta</td></tr>
+          <tr><td><b>Aba «Editor» das configurações</b></td><td>Auto-complete, code checking, editor language, spell-check dictionary (português disponível)</td></tr>
+          <tr><td><b>«File» → «Word Count»</b></td><td>Contagem de palavras do projeto compilado</td></tr>
+        </tbody></table></div>
+        <div class="tw"><table><thead><tr><th style="width:170px">Atalho</th><th>Ação</th></tr></thead><tbody>
+          <tr><td><code>Ctrl+Enter</code> ou <code>Ctrl+S</code></td><td>Compilar</td></tr>
+          <tr><td><code>Ctrl+/</code></td><td>Comentar ou descomentar as linhas selecionadas</td></tr>
+          <tr><td><code>Ctrl+B</code> · <code>Ctrl+I</code></td><td>Negrito · itálico</td></tr>
+          <tr><td><code>Ctrl+F</code></td><td>Buscar e substituir</td></tr>
+          <tr><td><code>Ctrl+Espaço</code></td><td>Autocompletar (no Mac, os demais usam Cmd; este continua Ctrl+Espaço)</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Escreva no «Code Editor»: é onde você vê o que o <code>abntex2cite</code> e o <code>\ref</code> estão fazendo. O «Visual Editor» serve para revisar texto corrido e para colegas que não conhecem LaTeX — o arquivo é o mesmo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s14" data-title="Galeria de modelos e «Open as Template»">
+  <div class="inner">
+    <div class="kicker-part rv">Overleaf<span>4 de 10 · overleaf.com/latex/templates · capturas de 09/09/2026</span></div>
+    <h2 class="rv">Galeria de modelos: filtros, a tag «portuguese» e o botão «Open as Template»</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_04_overleaf_templates.jpg" width="1920" height="938" alt="Galeria de templates do Overleaf com os filtros All, Templates, Examples e Community articles e os cartões dos modelos"></div><figcaption><b>Figura 9</b> A galeria (captura de 09/09/2026): filtros «All», «Templates», «Examples» e «Community articles»; cada cartão abre a página do modelo.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/lx_05_overleaf_templates_pt.jpg" width="1920" height="938" alt="Galeria do Overleaf filtrada pela tag portuguese, com modelos de TCC, dissertação, relatório e artigo de instituições brasileiras"></div><figcaption><b>Figura 10</b> A tag «portuguese» (captura de 09/09/2026): entre os modelos, «Modelo TCC DEM CEFET-MG», «Modelo latex UnB», «Modelo de Relatório Final de Iniciação Científica», «Modelo de artigo para Physicae Organum», «Template Relatórios FEELT31109» (UFU), entre outros.</figcaption></figure>
+      <div>
+        <ol>
+          <li>No painel de projetos, «New Project» → «Templates», ou abra overleaf.com/latex/templates.</li>
+          <li>Filtre por «Templates» e por tag («portuguese», «thesis») ou pesquise pelo nome da instituição; pesquise «abnTeX2» na galeria para os modelos que usam a classe.</li>
+          <li>Na página do modelo, leia a licença e as tags, use «View Source» e «View PDF» para conferir, e clique em «Open as <span class="gterm" tabindex="0" data-t="Template" data-d="Modelo pronto da galeria do Overleaf ou do abnTeX2; «Open as Template» cria uma cópia sua.">Template</span>»: uma cópia vira projeto seu.</li>
+        </ol>
+        <div class="rule-box"><span class="blabel">Regra</span><p>A cópia é sua: o modelo original não muda quando o autor atualiza. Anote na primeira linha do <code>main.tex</code> de onde veio (nome, autor, licença, data) — a licença CC BY 4.0 dos modelos brasileiros exige a atribuição.</p></div>
+        <div class="note"><span class="blabel">Observado em 09/09/2026</span><p>As tags «brazil» e «abnt» devolveram «There are no articles matching your tags»; as buscas por «abnt» e «abntex2» não renderizaram resultados no navegador automatizado deste manual — pesquise abnTeX2 na galeria no seu navegador.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s15" data-title="Modelos brasileiros e de teses na galeria">
+  <div class="inner">
+    <div class="kicker-part rv">Overleaf<span>5 de 10 · capturas de 09/09/2026</span></div>
+    <h2 class="rv">Modelos brasileiros na galeria: UnB, ProIC, CEFET-MG, UFU — e a galeria de teses</h2>
+    <div class="three rv">
+      <figure><div class="shot"><img src="capturas/lx_06_template_unb.jpg" width="1920" height="938" alt="Página do Modelo latex UnB na galeria do Overleaf, com os botões Open as Template, View Source e View PDF, licença CC BY 4.0 e as tags Portuguese e Theses"></div><figcaption><b>Figura 11</b> «Modelo latex UnB» — «Modelo de dissertação e de tese - UnB» (captura de 09/09/2026): «Open as Template», «View Source», «View PDF»; licença CC BY 4.0; tags «Portuguese» e «Theses».</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/lx_07_template_proic.jpg" width="1920" height="938" alt="Página do Modelo de Relatório Final de Iniciação Científica da UnB na galeria do Overleaf"></div><figcaption><b>Figura 12</b> «Modelo de Relatório Final de Iniciação Científica» (Leonardo Luiz e Castro, UnB/ProIC; captura de 09/09/2026): classe <code>article</code> com <code>abntex2cite</code>; CC BY 4.0.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/lx_08_templates_teses.jpg" width="1920" height="938" alt="Galeria de teses do Overleaf (tag thesis) com modelos de várias universidades"></div><figcaption><b>Figura 13</b> A galeria de teses («thesis»; captura de 09/09/2026): centenas de páginas, com modelos da USP (IME), UFRGS, UnB, UNICAMP, UFRJ, Minho, Lisboa, Porto e IPB, entre outros.</figcaption></figure>
+    </div>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:250px">Modelo (tag «portuguese»)</th><th>O que é</th><th style="width:130px">Licença</th></tr></thead><tbody>
+        <tr><td><b>Modelo latex UnB</b></td><td>Dissertação e tese; tags Portuguese/Theses</td><td>CC BY 4.0</td></tr>
+        <tr><td><b>Modelo de Relatório Final de Iniciação Científica</b></td><td>UnB/ProIC; <code>article</code> + <code>abntex2cite</code></td><td>CC BY 4.0</td></tr>
+        <tr><td><b>Modelo de artigo para Physicae Organum</b></td><td>UnB; <code>\usepackage[alf]{abntex2cite}</code></td><td>ver a página</td></tr>
+        <tr><td><b>Modelo TCC DEM CEFET-MG</b></td><td>Bruno Fichos; classe <code>report</code></td><td>CC BY 4.0</td></tr>
+        <tr><td><b>Template Relatórios FEELT31109</b></td><td>UFU</td><td>ver a página</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Ordem de preferência: o modelo oficial da sua instituição (biblioteca ou programa) → um modelo institucional publicado com licença clara → o modelo canônico do abnTeX2 (Parte 3). Um modelo de outra universidade tem a capa e a ficha de outra universidade: sirva-se do preâmbulo, não da identidade visual.</p></div>
+        <div class="note"><span class="blabel">Manual irmão</span><p>Qual estrutura o seu trabalho precisa ter (NBR 14724, NBR 15287) é assunto do <a href="https://metodologia.mirandastech.com.br/">manual de Metodologia</a>; aqui se cuida de produzi-la em LaTeX.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s16" data-title="Enviar e baixar um projeto">
+  <div class="inner">
+    <div class="kicker-part rv">Overleaf<span>6 de 10 · docs.overleaf.com · tela do editor conforme a documentação oficial</span></div>
+    <h2 class="rv">Enviar e baixar um projeto: «Upload Project» (.zip) e «Download as source» — com os limites do serviço</h2>
+    <div class="two rv">
+      <div>
+        <div class="flow">
+          <div class="node"><span class="nn">Enviar</span><span class="nt">«New Project» → «Upload Project»</span><span class="nd">Escolha o <code>.zip</code> com <code>main.tex</code>, <code>.bib</code>, figuras e capítulos («Existing project (.zip)»)</span></div>
+          <div class="node"><span class="nn">Baixar</span><span class="nt">«Menu» → «Download as source (.zip)»</span><span class="nd">Ou «Download as PDF»; o ícone de download ao lado do «Recompile» baixa o PDF</span></div>
+          <div class="node"><span class="nn">Arquivos</span><span class="nt">Painel de arquivos</span><span class="nd">«Upload» envia figuras e o <code>.bib</code> avulsos; pastas organizam capítulos e figuras</span></div>
+        </div>
+        <div class="tw"><table><thead><tr><th style="width:230px">Limite (conforme a documentação)</th><th>Valor</th></tr></thead><tbody>
+          <tr><td>Tamanho do arquivo enviado</td><td>até 50 MB</td></tr>
+          <tr><td>Arquivos por envio</td><td>até 180</td></tr>
+          <tr><td>Arquivos por projeto</td><td>até 2.000</td></tr>
+          <tr><td>Material editável (texto) por projeto</td><td>até 7 MB</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <div class="code"><div class="code-head">terminal — empacotar a pasta gerada pelo novo_trabalho.py (Parte 4) para enviar ao Overleaf</div><pre>cd minha-dissertacao
+zip -r ../minha-dissertacao.zip main.tex referencias.bib capitulos figuras
+# no Overleaf: New Project → Upload Project → escolher minha-dissertacao.zip</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Baixe o «source (.zip)» ao fim de cada semana de trabalho e guarde com a data: é o seu backup fora do serviço, e é o que você compila localmente com <code>compilar.sh</code> se ficar sem internet ou estourar o tempo de compilação. Figuras grandes: converta para PDF ou reduza a resolução antes de enviar.</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Enviar figuras de dezenas de megabytes.</strong> Além do limite de 50 MB por arquivo, imagens grandes são causa comum de <em>timeout</em> na compilação (slide «Erros e logs»).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s17" data-title="Compartilhar, comentar, Track changes e History">
+  <div class="inner">
+    <div class="kicker-part rv">Overleaf<span>7 de 10 · docs.overleaf.com, «Sharing a project» · captura de 09/09/2026</span></div>
+    <h2 class="rv">Compartilhar e comentar (gratuito); «Track changes» e histórico completo (premium)</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_15_docs_compartilhar.jpg" width="1920" height="938" alt="Documentação do Overleaf sobre compartilhar um projeto: botão Share, níveis View-only, Review e Edit, e link sharing"></div><figcaption><b>Figura 14</b> «Sharing a project», em docs.overleaf.com (captura de 09/09/2026): o botão «Share», os níveis «View-only», «Review» e «Edit», e o compartilhamento por link («View Link» e «Edit Link»).</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:170px">Recurso</th><th>Como (conforme a documentação)</th><th style="width:120px">Plano</th></tr></thead><tbody>
+          <tr><td><b>Convidar</b></td><td>«Share» → e-mail → «View-only», «Review» ou «Edit» → «Invite»</td><td><span class="pill p-go">gratuito</span> (1 colaborador por projeto)</td></tr>
+          <tr><td><b>Link</b></td><td>«View Link» (só leitura) ou «Edit Link» (exige conta de quem abre)</td><td><span class="pill p-go">gratuito</span></td></tr>
+          <tr><td><b>Comentar</b></td><td>Selecionar o trecho → «Add comment»; resolver no ✓</td><td><span class="pill p-go">gratuito</span></td></tr>
+          <tr><td><b>«<span class="gterm" tabindex="0" data-t="Track changes" data-d="Controle de alterações do Overleaf (premium): modos Editing e Reviewing, aceitar ou rejeitar mudanças.">Track changes</span>»</b></td><td>Ícone «Review» → modos «Editing» / «Reviewing» → «Accept» / «Reject selected changes»</td><td><span class="pill p-amber">premium</span></td></tr>
+          <tr><td><b>«History»</b></td><td>Ícone «History»: rótulos (labels), comparar versões, restaurar arquivo ou projeto, baixar o <code>.zip</code> de uma versão</td><td><span class="pill p-amber">gratuito só 24 h</span> (mais as versões rotuladas)</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Orientador que revisa em LaTeX: convide com «Review» (comenta sem editar) ou «Edit». Orientador que revisa em Word: gere o <code>.docx</code> com pandoc (Parte 4) e traga as mudanças de volta à mão. No plano gratuito, rotule uma versão («label») antes de cada revisão grande: só as rotuladas sobrevivem às 24 h.</p></div>
+        <div class="note"><span class="blabel">Colaborador ou revisor</span><p>No plano gratuito, «1 collaborator per project» conta quem tem «Edit» ou «Review»; leitores por «View Link» não contam. Standard e Student: 10 colaboradores; Pro: ilimitados.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s18" data-title="Planos e preços">
+  <div class="inner">
+    <div class="kicker-part rv">Overleaf<span>8 de 10 · overleaf.com/user/subscription/plans · valores em real vistos em 09/09/2026</span></div>
+    <h2 class="rv">Planos e preços: o que o gratuito faz, o que o premium acrescenta — e como conferir se a sua instituição tem licença</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_13_overleaf_planos.jpg" width="1920" height="938" alt="Página de planos do Overleaf em real: Free R$0, Standard R$43,75 por mês, Pro R$87,50 por mês, Organizations; itens 1 collaborator per project, Basic compile timeout e 24x Basic compile timeout"></div><figcaption><b>Figura 15</b> A página de planos (captura de 09/09/2026, cobrança anual): «Free» R$ 0; «Standard» R$ 43,75/mês; «Pro» R$ 87,50/mês; «Organizations» sob consulta; «1 collaborator per project», «Basic compile timeout» e «24x Basic compile timeout».</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:130px">Plano</th><th>Preço (anual · mensal)</th><th>Colaboradores</th><th>Compilação</th><th>Histórico, Track Changes, integrações, IA</th></tr></thead><tbody>
+          <tr><td><b>Free</b></td><td>R$ 0</td><td>1 por projeto</td><td>10 s</td><td>24 h; sem <span class="gterm" tabindex="0" data-t="Track changes" data-d="Controle de alterações do Overleaf (premium): modos Editing e Reviewing, aceitar ou rejeitar mudanças.">Track Changes</span>; sem Zotero/Mendeley/Git/GitHub/Dropbox; sem Symbol Palette; IA «Basic (no assistant)»</td></tr>
+          <tr><td><b>Student</b></td><td>R$ 21/mês · R$ 25</td><td>10</td><td>240 s</td><td>completo; sim; sim; AI Assistant</td></tr>
+          <tr><td><b>Standard</b></td><td>R$ 43,75/mês (R$ 524/ano) · R$ 69</td><td>10</td><td>240 s</td><td>completo; sim; sim; AI Assistant</td></tr>
+          <tr><td><b>Pro</b></td><td>R$ 87,50/mês (R$ 1.049/ano) · R$ 122</td><td>ilimitados</td><td>240 s</td><td>completo; sim; sim; AI Assistant</td></tr>
+          <tr><td><b>Organizations</b></td><td>«Contact Sales»</td><td colspan="3">Licenças institucionais («Overleaf Commons»)</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Antes de pagar, confira a sua instituição em overleaf.com/edu: quem tem «Overleaf Commons» entra pelo SSO e recebe os recursos premium. Em 09/09/2026, a página overleaf.com/edu/usp dizia que a «Universidade de Sao Paulo (USP) does not currently have an institutional partnership with Overleaf» — cada instituição tem a sua página.</p></div>
+        <div class="note"><span class="blabel">O gratuito basta para</span><p>Projetos ilimitados, um colaborador, o abnTeX2 e a maioria das dissertações — desde que caibam em 10 s de compilação. Quando não couberem, a alternativa gratuita é compilar localmente (Parte 4), não necessariamente pagar.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s19" data-title="Erros e logs; timeouts">
+  <div class="inner">
+    <div class="kicker-part rv">Overleaf<span>9 de 10 · overleaf.com/learn, «Errors» · docs.overleaf.com, «Resolving issues» · captura de 09/09/2026</span></div>
+    <h2 class="rv">Erros e logs: os sete erros do guia, «Stop on first error», «Fast [draft]» e o <em>timeout</em> de 10 s × 240 s</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_12_learn_erros.jpg" width="1920" height="938" alt="Guia Errors do Overleaf Learn, com a lista de erros comuns do LaTeX e a explicação de cada um"></div><figcaption><b>Figura 16</b> O guia «Errors» do Overleaf Learn (captura de 09/09/2026): cada erro comum com causa e correção. No editor, o ícone ao lado do «Recompile» abre o log com as mesmas mensagens.</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:250px">Mensagem</th><th>Causa habitual</th></tr></thead><tbody>
+          <tr><td><code>Undefined control sequence</code></td><td>Comando com erro de digitação ou pacote não carregado</td></tr>
+          <tr><td><code>Missing $ inserted</code></td><td>Símbolo matemático (<code>_</code>, <code>^</code>, <code>\frac</code>) fora de modo matemático</td></tr>
+          <tr><td><code>File not found</code></td><td>Figura, capítulo ou <code>.bib</code> com nome ou caminho errado</td></tr>
+          <tr><td><code>Double subscript</code></td><td>Dois <code>_</code> seguidos sem chaves</td></tr>
+          <tr><td><code>Misplaced alignment tab character &amp;</code></td><td><code>&amp;</code> fora de tabela — escreva <code>\&amp;</code> no texto</td></tr>
+          <tr><td><code>Environment … undefined</code></td><td><span class="gterm" tabindex="0" data-t="Ambiente" data-d="Par \begin{nome} … \end{nome} (figure, table, itemize, equation, resumo).">Ambiente</span> sem o pacote que o define</td></tr>
+          <tr><td><code>Underfull</code> / <code>Overfull hbox</code></td><td>Avisos de linha mal preenchida ou larga demais — não impedem o PDF</td></tr>
+        </tbody></table></div>
+        <div class="tw"><table><thead><tr><th style="width:250px">Timeout (10 s gratuito; 240 s premium)</th><th>O que fazer</th></tr></thead><tbody>
+          <tr><td>Erros acumulados</td><td>Ligue «Stop on first error» e corrija o primeiro</td></tr>
+          <tr><td>Imagens grandes</td><td>PDF em vez de PNG; «Fast [draft]» enquanto escreve</td></tr>
+          <tr><td>Pacotes lentos (TikZ/pgfplots, tabularray, SVG/EPS)</td><td>Gere as figuras uma vez e inclua como PDF</td></tr>
+          <tr><td><code>[H]</code> em muitos floats; <code>\caption</code> fora de <span class="gterm" tabindex="0" data-t="Float" data-d="Objeto que o LaTeX posiciona onde couber (figure, table); daí a legenda e o [htbp].">float</span></td><td>Use <code>[htbp]</code>; legenda sempre dentro de <code>figure</code> ou <code>table</code></td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Leia o primeiro erro do log, não o último: os seguintes costumam ser consequência. Quando o projeto não couber em 10 s, baixe o <code>.zip</code> e compile localmente (Parte 4) — a compilação local não tem limite de tempo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s20" data-title="IA no Overleaf">
+  <div class="inner">
+    <div class="kicker-part rv">Overleaf<span>10 de 10 · docs.overleaf.com, «Premium features» · blog «Overleaf AI now a part of Overleaf plans» (02/07/2026) · captura de 09/09/2026</span></div>
+    <h2 class="rv">IA no Overleaf: «AI Assistant» e «Error Assist» — o que é, para onde vai o texto e como declarar o uso</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_14_docs_premium.jpg" width="1920" height="938" alt="Página Premium features da documentação do Overleaf, listando os recursos dos planos pagos, entre eles Track Changes, histórico completo, integrações e AI Assistant"></div><figcaption><b>Figura 17</b> «Premium features», em docs.overleaf.com (captura de 09/09/2026): a lista do que os planos pagos acrescentam — Track Changes, histórico completo, integrações com gerenciadores de referências e Git, e o AI Assistant.</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:170px">Recurso</th><th>O que a documentação diz</th></tr></thead><tbody>
+          <tr><td><b>AI Assistant</b></td><td>Nos planos pagos; o conteúdo enviado vai à OpenAI; o Overleaf declara que não treina modelos com ele. Desde 02/07/2026, «Overleaf AI» faz parte dos planos</td></tr>
+          <tr><td><b>Error Assist</b></td><td>Explica o erro do log em linguagem corrente; o plano gratuito tem uma «permissão básica» diária</td></tr>
+          <tr><td><b>Plano gratuito</b></td><td>IA «Basic (no assistant)»</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Antes de acionar o AI Assistant sobre o texto da dissertação, pergunte-se se o programa, o orientador e o comitê de ética permitem enviar esse texto a um serviço externo — dados de participantes e resultados inéditos podem não poder sair. O uso, quando houver, entra na declaração de uso de IA do trabalho.</p></div>
+        <div class="note"><span class="blabel">Manual irmão</span><p>O que declarar, como e onde (na metodologia, nos agradecimentos ou em seção própria) está no <a href="https://manual.mirandastech.com.br/">manual de Uso de IA na pesquisa científica</a>. O Error Assist que explica um erro de compilação e o AI Assistant que reescreve um parágrafo são usos diferentes — e a declaração distingue.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 3 ===================== -->
+<section class="slide divider" id="s21" data-title="Parte 3 · abnTeX2"><div class="inner"><div class="kicker-part rv">Parte 3<span>abnTeX2</span></div><h2 class="rv">A classe brasileira: o que é e quais normas atende; instalar; o modelo canônico por dentro; citações com abntex2cite; compilar; artigo e projeto; customizações e biblatex-abnt; erros comuns</h2><p class="rv">O abnTeX2 é a classe e o estilo bibliográfico que colocam a ABNT dentro do LaTeX. O modelo canônico foi compilado de verdade na demonstração deste manual (83 páginas) e aparece nas figuras; o esqueleto em código é o do arquivo distribuído no <span class="gterm" tabindex="0" data-t="CTAN" data-d="Comprehensive TeX Archive Network: o repositório de onde as distribuições e o abnTeX2 são obtidos.">CTAN</span>.</p></div><div class="num">03</div></section>
+
+<section class="slide" id="s22" data-title="abnTeX2: o que é e normas atendidas">
+  <div class="inner">
+    <div class="kicker-part rv">abnTeX2<span>1 de 10 · abntex.net.br · ctan.org/pkg/abntex2 · capturas de 09/09/2026</span></div>
+    <h2 class="rv">abnTeX2: «classe LaTeX e estilo bibliográfico compatíveis com as normas da ABNT» — e quais edições das normas ele implementa</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_17_abntex_site.jpg" width="1920" height="938" alt="Site abntex.net.br com a descrição Classe LaTeX e estilo bibliográfico compatíveis com as normas da ABNT e os links de documentação"></div><figcaption><b>Figura 18</b> abntex.net.br (captura de 09/09/2026): «Classe LaTeX e estilo bibliográfico compatíveis com as normas da ABNT»; documentação, modelos e wiki.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/lx_18_abntex_ctan.jpg" width="1920" height="938" alt="Página do abnTeX2 no CTAN: versão 1.9.7 de 2018, licença LPPL 1.3, mantenedor e pacotes relacionados"></div><figcaption><b>Figura 19</b> A página do abnTeX2 no CTAN (captura de 09/09/2026): versão 1.9.7 (24/11/2018), LPPL 1.3, copyright 2012–2018 Abntex2 team, mantenedor Lauro César Araujo; relacionados: babel-portuges, tabularray-abnt, lshort-portuguese-br, simplecv.</figcaption></figure>
+      <div>
+        <p class="lead">É uma suíte: a classe <code>abntex2</code> (baseada na <code>memoir</code>) cuida da estrutura e da forma; o pacote <code>abntex2cite</code> cuida das citações e das referências, nos estilos <code>alf</code> (autor-data) e <code>num</code> (numérico).</p>
+        <div class="tw"><table><thead><tr><th style="width:190px">Norma (README)</th><th>Assunto</th><th style="width:210px">Edição mais nova</th></tr></thead><tbody>
+          <tr><td>NBR 14724:2011</td><td>Trabalhos acadêmicos</td><td><span class="pill p-amber">2024</span></td></tr>
+          <tr><td>NBR 6023:2002</td><td>Referências</td><td><span class="pill p-amber">2018</span></td></tr>
+          <tr><td>NBR 10520:2002</td><td>Citações</td><td><span class="pill p-amber">2023</span></td></tr>
+          <tr><td>NBR 15287:2011</td><td>Projeto de pesquisa</td><td>—</td></tr>
+          <tr><td>NBR 6022:2018 · 6024:2012 · 6027:2012 · 6028:2003 · 6029:2006 · 6034:2004 · 10719:2015</td><td>Artigo, numeração progressiva, sumário, resumo, livros, índice, relatório técnico</td><td>—</td></tr>
+        </tbody></table></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Supor que o PDF do abnTeX2 está «na norma vigente».</strong> A versão 1.9.7 é de 2018; as NBR 6023 (2018), 10520 (2023) e 14724 (2024) têm edições mais novas que as implementadas. Confira as diferenças com a biblioteca da sua instituição e ajuste o que for preciso — o slide «Customizações» mostra por onde.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s23" data-title="Instalar ou ter o abnTeX2">
+  <div class="inner">
+    <div class="kicker-part rv">abnTeX2<span>2 de 10 · github.com/abntex/abntex2 · wiki · capturas de 09/09/2026</span></div>
+    <h2 class="rv">Instalar ou ter: no Overleaf já está; no TeX Live, MacTeX e MiKTeX também; senão, <code>tlmgr install abntex2</code></h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_19_abntex_github.jpg" width="1920" height="938" alt="Repositório abntex/abntex2 no GitHub, com os arquivos da classe e a lista de commits"></div><figcaption><b>Figura 20</b> O repositório abntex/abntex2 no GitHub (captura de 09/09/2026): último commit em 14/09/2023 («Update ISSUE_TEMPLATE.md»); sem releases formais — a versão de referência é a do CTAN.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/lx_20_abntex_wiki.jpg" width="1920" height="938" alt="Wiki do abnTeX2 com as páginas Por onde começar, FAQ, instalação, ferramentas, tutoriais e customizações conhecidas"></div><figcaption><b>Figura 21</b> A wiki do abnTeX2 (captura de 09/09/2026): «Por onde começar?», FAQ, instalação (Linux, Mac, Windows, Docker), ferramentas, tutoriais e customizações conhecidas.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">terminal — instalar (TeX Live/TinyTeX) e localizar o modelo canônico</div><pre>tlmgr install abntex2
+kpsewhich abntex2.cls                             # onde a classe está
+kpsewhich abntex2-modelo-trabalho-academico.tex   # onde o modelo está (vazio no TinyTeX: baixe do CTAN)</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:150px">Onde</th><th>Situação</th></tr></thead><tbody>
+          <tr><td><b>Overleaf</b></td><td>Nada a instalar: <code>\documentclass{abntex2}</code> compila</td></tr>
+          <tr><td><b>TeX Live (2013+), MacTeX</b></td><td>Já incluído</td></tr>
+          <tr><td><b><span class="gterm" tabindex="0" data-t="MiKTeX" data-d="Distribuição para Windows, macOS e Linux que instala pacotes sob demanda.">MiKTeX</span></b></td><td>Baixa ao compilar, ou pelo Package Manager</td></tr>
+          <tr><td><b>TinyTeX</b></td><td><code>tlmgr install abntex2</code>; os modelos vêm do CTAN (<code>abntex2.zip</code>, pasta <code>doc/examples</code>), porque o repositório do TinyTeX não traz documentação</td></tr>
+        </tbody></table></div>
+        <div class="note"><span class="blabel">Documentação e modelos</span><p><code>abntex2.pdf</code> (classe), <code>abntex2cite.pdf</code> e <code>abntex2cite-alf.pdf</code>. Modelos em <code>doc/examples</code>: trabalho acadêmico, artigo, projeto de pesquisa, relatório técnico, livro, glossários, slides, <code>-include-comandos.tex</code>, <code>-references.bib</code>, <code>-img-marca.pdf</code> e <code>-img-grafico.pdf</code>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s24" data-title="Modelo canônico: classe, pacotes e dados">
+  <div class="inner">
+    <div class="kicker-part rv">abnTeX2<span>3 de 10 · abntex2-modelo-trabalho-academico.tex (CTAN) · compilado na demonstração de 09/09/2026</span></div>
+    <h2 class="rv">O modelo canônico por dentro (1/3): <code>\documentclass</code>, pacotes e os comandos de dados que preenchem capa e folha de rosto</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_30_modelo_capa_folharosto.jpg" width="1920" height="938" alt="Capa e folha de rosto do modelo canônico de trabalho acadêmico do abnTeX2 compilado localmente: Modelo Canônico de Trabalho Acadêmico com abnTeX2, Brasil, 2018, versão 1.9.7"></div><figcaption><b>Figura 22</b> Capa (p. 1) e folha de rosto (p. 2) do modelo canônico compilado na demonstração deste manual (captura de 09/09/2026): «Modelo Canônico de Trabalho Acadêmico com abnTeX2», Brasil, 2018, v-1.9.7 — tudo vindo dos comandos de dados ao lado.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">main.tex — preâmbulo do modelo (trecho, como no arquivo do CTAN)</div><pre>\documentclass[12pt, openright, twoside, a4paper, english, french, spanish, brazil]{abntex2}
+
+\usepackage{lmodern}                % fonte Latin Modern
+\usepackage[T1]{fontenc}            % codificação das fontes
+\usepackage[utf8]{inputenc}         % codificação do arquivo
+\usepackage{indentfirst}            % indenta o primeiro parágrafo
+\usepackage{nomencl}                % lista de símbolos
+\usepackage{color}
+\usepackage{graphicx}               % figuras
+\usepackage{microtype}              % melhorias tipográficas
+\usepackage{lipsum}                 % texto de exemplo (remova no trabalho real)
+\usepackage[brazilian,hyperpageref]{backref}   % «Citado na página…»
+\usepackage[alf]{abntex2cite}       % citações autor-data ABNT ([num] para numérico)
+
+\titulo{Manutenção preditiva de guindastes portuários com aprendizado de máquina}
+\autor{Nome do Estudante}
+\local{Cidade}
+\data{2026}
+\orientador{Prof. Dr. Nome do Orientador}
+\coorientador{Prof. Dr. Nome do Coorientador}
+\instituicao{Universidade Exemplo}
+\tipotrabalho{Dissertação (Mestrado)}
+\preambulo{Dissertação (Mestrado) apresentada ao Programa de Pós-Graduação
+  da Universidade Exemplo como requisito parcial para obtenção do título.}</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:190px">Opção da classe</th><th>Efeito</th></tr></thead><tbody>
+          <tr><td><code>12pt</code>, <code>a4paper</code></td><td>Corpo 12 em A4</td></tr>
+          <tr><td><code>openright</code>, <code>twoside</code></td><td>Capítulos começam em página ímpar; margens espelhadas (frente e verso)</td></tr>
+          <tr><td><code>english, french, spanish, brazil</code></td><td>Idiomas passados ao babel; o modelo usa <code>brazil</code> como idioma do documento</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s25" data-title="Modelo canônico: pré-textuais">
+  <div class="inner">
+    <div class="kicker-part rv">abnTeX2<span>4 de 10 · mesmo arquivo · figura da demonstração de 09/09/2026</span></div>
+    <h2 class="rv">O modelo canônico por dentro (2/3): os elementos pré-textuais, da capa ao sumário, na ordem do arquivo</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_32_modelo_resumo_siglas.jpg" width="1920" height="938" alt="Páginas do resumo e da lista de abreviaturas e siglas do modelo canônico do abnTeX2 compilado"></div><figcaption><b>Figura 23</b> Resumo (p. 15) e lista de abreviaturas e siglas (p. 29) do modelo compilado na demonstração deste manual (captura de 09/09/2026): o ambiente <code>resumo</code> e o ambiente <code>siglas</code> produzem estas páginas.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">main.tex — pré-textuais, na sequência do modelo (cada ambiente é opcional; apague o que o seu trabalho não tem)</div><pre>\begin{document}
+\imprimircapa                       % capa
+\imprimirfolhaderosto*              % folha de rosto (* = com a ficha no verso)
+\begin{fichacatalografica} … \end{fichacatalografica}
+\begin{errata} … \end{errata}
+\begin{folhadeaprovacao} … \end{folhadeaprovacao}
+\begin{dedicatoria} … \end{dedicatoria}
+\begin{agradecimentos} … \end{agradecimentos}
+\begin{epigrafe} … \end{epigrafe}
+\begin{resumo} … \end{resumo}                  % resumo em português
+\begin{resumo}[Abstract] … \end{resumo}        % abstract
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures                       % lista de ilustrações
+\listoftables                        % lista de tabelas
+\begin{siglas} … \end{siglas}        % lista de abreviaturas e siglas
+\begin{simbolos} … \end{simbolos}    % lista de símbolos
+\tableofcontents*                    % sumário (* = sem entrada para si mesmo)</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>A ordem dos pré-textuais é a da NBR 14724 e está embutida no modelo: não reordene os ambientes. O que o seu programa não exige (errata, epígrafe, lista de símbolos), remova em bloco. A ficha catalográfica costuma vir da biblioteca da instituição: cole o conteúdo dentro de <code>fichacatalografica</code> ou inclua o PDF que ela fornecer.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s26" data-title="Modelo canônico: textual e pós-textual">
+  <div class="inner">
+    <div class="kicker-part rv">abnTeX2<span>5 de 10 · mesmo arquivo · figura da demonstração de 09/09/2026</span></div>
+    <h2 class="rv">O modelo canônico por dentro (3/3): <code>\textual</code>, capítulos, <code>\postextual</code>, referências, apêndices e anexos</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_31_modelo_sumario_introducao.jpg" width="1920" height="938" alt="Sumário e página 1 Introdução do modelo canônico do abnTeX2 compilado, com a numeração dos capítulos"></div><figcaption><b>Figura 24</b> Sumário (p. 33) e «1 Introdução», que abre a parte textual, no modelo compilado na demonstração deste manual (captura de 09/09/2026). O sumário só fica preenchido depois da sequência completa de compilação (slide «Compilar»).</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">main.tex — textual e pós-textual, na sequência do modelo</div><pre>\textual                             % começa a numeração das páginas e dos capítulos
+
+\chapter{Introdução}                 % ou \include{capitulos/1-introducao}
+Texto com citações \cite{knauff2014} e referências cruzadas.
+\chapter{Método}
+\chapter{Resultados}
+\chapter{Conclusão}
+
+\postextual                          % elementos pós-textuais
+
+\bibliography{referencias}           % lê referencias.bib; o estilo vem do abntex2cite
+
+\begin{apendicesenv}                 % apêndices (seus)
+  \chapter{Questionário aplicado}
+\end{apendicesenv}
+
+\begin{anexosenv}                    % anexos (de terceiros)
+  \chapter{Parecer do comitê de ética}
+\end{anexosenv}
+
+\printindex                          % índice remissivo (se houver \index{})
+\end{document}</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Um <code>\include{capitulos/N-nome}</code> por capítulo mantém o <code>main.tex</code> curto e permite compilar um capítulo de cada vez com <code>\includeonly{}</code>. Apêndice é o que você produziu; anexo é o que veio de terceiros — a classe numera cada um com a letra certa.</p></div>
+        <div class="note"><span class="blabel">Na demonstração deste manual (09/09/2026)</span><p>O modelo canônico compilou em 83 páginas com <code>latexmk -pdf -f</code>: capa p. 1, folha de rosto p. 2, resumo p. 15, siglas p. 29, sumário p. 33, referências p. 51; sumário preenchido e nenhuma citação «??».</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s27" data-title="Citações e referências com abntex2cite">
+  <div class="inner">
+    <div class="kicker-part rv">abnTeX2<span>6 de 10 · abntex2cite.pdf e abntex2cite-alf.pdf · Overleaf Learn, «Bibliography management with bibtex» · capturas de 09/09/2026</span></div>
+    <h2 class="rv">Citações e referências com <code>abntex2cite</code>: <code>\cite</code>, <code>\citeonline</code>, <code>\apud</code>, os estilos <code>alf</code> e <code>num</code> — e o arquivo <code>.bib</code></h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_36_modelo_citacao_referencias.jpg" width="1920" height="938" alt="Página do modelo do abnTeX2 com citações autor-data como (ARAUJO, 2015a) no texto e a seção sobre referências"></div><figcaption><b>Figura 25</b> Página do modelo compilado na demonstração deste manual (captura de 09/09/2026): citações autor-data como «(ARAUJO, 2015a)» — a letra desambigua duas obras do mesmo autor no mesmo ano — e a seção sobre referências.</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:190px">Comando</th><th>Resultado no estilo <code>alf</code></th></tr></thead><tbody>
+          <tr><td><code>\cite{knauff2014}</code></td><td>(KNAUFF; NEJASMIC, 2014) — citação entre parênteses</td></tr>
+          <tr><td><code>\citeonline{knauff2014}</code></td><td>Knauff e Nejasmic (2014) — autor no texto</td></tr>
+          <tr><td><code>\apud{fonte}{obra}</code></td><td>Citação de citação («apud»)</td></tr>
+          <tr><td><code>\usepackage[num]{abntex2cite}</code></td><td>Estilo numérico: [1], [2]…, com a lista numerada</td></tr>
+          <tr><td><code>\nocite{*}</code></td><td>Lista tudo do <code>.bib</code> — evite: a ABNT lista só o que foi citado</td></tr>
+        </tbody></table></div>
+        <div class="code"><div class="code-head">referencias.bib — uma entrada (o Better BibTeX gera isto a partir do Zotero, Parte 4)</div><pre>@article{knauff2014,
+  author  = {Knauff, Markus and Nejasmic, Jelica},
+  title   = {An Efficiency Comparison of Document Preparation
+             Systems Used in Academic Research and Development},
+  journal = {PLoS ONE}, year = {2014}, volume = {9}, number = {12},
+  pages   = {e115069}, doi = {10.1371/journal.pone.0115069}
+}</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Autores separados por <code>and</code>; nome composto entre chaves (<code>{Barbosa Neto}</code>). O Overleaf roda o bibtex sozinho a cada «Recompile»; localmente, é o <code>latexmk</code> (próximo slide).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s28" data-title="Compilar: pdflatex → bibtex → makeindex → pdflatex">
+  <div class="inner">
+    <div class="kicker-part rv">abnTeX2<span>7 de 10 · FAQ do abnTeX2 · demonstração de 09/09/2026</span></div>
+    <h2 class="rv">Compilar: pdflatex → bibtex → makeindex → pdflatex → pdflatex, ou <code>latexmk</code> — e a armadilha do <code>.log</code> antigo</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_t2_latexmk.jpg" width="1920" height="620" alt="Terminal: latexmk compilando o modelo canônico do abnTeX2, mostrando as regras pdflatex, bibtex e makeindex executadas e o PDF final com 83 páginas"></div><figcaption><b>Figura 26</b> <code>latexmk -pdf -f</code> sobre o modelo canônico na demonstração deste manual (captura de 09/09/2026): as regras pdflatex, bibtex e makeindex, o pdflatex de novo, e o PDF de 83 páginas.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">terminal — a sequência à mão (FAQ do abnTeX2) e a automática</div><pre>pdflatex main.tex     # 1. grava citações e rótulos no .aux
+bibtex   main         # 2. gera o .bbl com as referências
+makeindex main.nlo -s nomencl.ist -o main.nls   # 3. lista de símbolos (se houver)
+pdflatex main.tex     # 4. insere referências e sumário
+pdflatex main.tex     # 5. acerta os números de página
+
+# o mesmo, automatizado: repete até estabilizar
+latexmk -pdf main.tex
+# limpar auxiliares e forçar do zero
+latexmk -C main.tex &amp;&amp; latexmk -pdf -f main.tex</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:190px">Sintoma</th><th>Causa e correção</th></tr></thead><tbody>
+          <tr><td>Citações «??» e sumário vazio</td><td>Faltou o bibtex ou a segunda passagem: rode a sequência completa</td></tr>
+          <tr><td>Referência aparece só na segunda compilação</td><td>Normal: o <code>.bbl</code> é gerado entre as passagens</td></tr>
+          <tr><td><code>latexmk</code> «não faz nada»</td><td>Um <code>.log</code> antigo fez o <span class="gterm" tabindex="0" data-t="latexmk" data-d="Ferramenta que repete pdflatex, bibtex/biber e makeindex até o documento estabilizar; o Overleaf e o compilar.sh a usam.">latexmk</span> pular o pdflatex e o bibtex — foi o que aconteceu na primeira tentativa da demonstração. <code>latexmk -C</code> e depois <code>-f</code></td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>No Overleaf, «Recompile» já roda o latexmk com o bibtex. No computador, use <code>compilar.sh main.tex --limpar</code> (Parte 4): ele chama <code>latexmk -pdf -f</code>, filtra as linhas de erro e imprime «ok: main.pdf (N páginas)». Quando o resultado parecer velho, limpe antes de desconfiar do código.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s29" data-title="Artigo e projeto de pesquisa">
+  <div class="inner">
+    <div class="kicker-part rv">abnTeX2<span>8 de 10 · abntex2-modelo-artigo.tex · abntex2-modelo-projeto-pesquisa.tex · compilados na demonstração de 09/09/2026</span></div>
+    <h2 class="rv">Artigo (NBR 6022) e projeto de pesquisa (NBR 15287): os outros dois modelos do abnTeX2</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_34_modelo_artigo.jpg" width="1920" height="938" alt="Duas primeiras páginas do modelo de artigo científico do abnTeX2 compilado, com título, autores, resumo e início do texto"></div><figcaption><b>Figura 27</b> As duas primeiras páginas do modelo de artigo (captura de 09/09/2026): título, autoria, resumo e abstract na primeira página, texto em seguida — 6 páginas na demonstração deste manual.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/lx_35_modelo_projeto.jpg" width="1920" height="938" alt="Páginas do modelo de projeto de pesquisa do abnTeX2 compilado, com capa e seções do projeto"></div><figcaption><b>Figura 28</b> Páginas do modelo de projeto de pesquisa (captura de 09/09/2026): 45 páginas na demonstração deste manual, com a estrutura da NBR 15287.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">artigo.tex — a linha de classe do modelo de artigo (como no arquivo)</div><pre>\documentclass[12pt, openright, twoside, a4paper, english, french, spanish, brazil, sumario=tradicional]{abntex2}</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:170px">Modelo</th><th>Para quê</th><th style="width:150px">Demonstração</th></tr></thead><tbody>
+          <tr><td><b>Trabalho acadêmico</b></td><td>TCC, dissertação, tese (NBR 14724)</td><td>83 páginas</td></tr>
+          <tr><td><b>Artigo</b></td><td>Artigo científico (NBR 6022); resumo e abstract na primeira página</td><td>6 páginas</td></tr>
+          <tr><td><b>Projeto de pesquisa</b></td><td>Projeto para qualificação, edital ou comitê de ética (NBR 15287)</td><td>45 páginas</td></tr>
+          <tr><td><b>Relatório técnico · livro · slides</b></td><td>NBR 10719; livro; apresentação</td><td>—</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Para periódico ou evento, o modelo do abnTeX2 só serve quando o periódico pede ABNT; a maioria fornece a própria classe (e está na galeria do Overleaf). O projeto de pesquisa segue a NBR 15287, cuja estrutura o <a href="https://metodologia.mirandastech.com.br/">manual de Metodologia</a> detalha: aqui você a produz em LaTeX.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s30" data-title="Customizações institucionais e biblatex-abnt">
+  <div class="inner">
+    <div class="kicker-part rv">abnTeX2<span>9 de 10 · wiki do abnTeX2 · ctan.org/pkg/biblatex-abnt · captura de 09/09/2026</span></div>
+    <h2 class="rv">Customizações institucionais conhecidas — e o <code>biblatex-abnt</code> como alternativa moderna ao <code>abntex2cite</code></h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_21_biblatex_abnt.jpg" width="1920" height="938" alt="Página do biblatex-abnt no CTAN, com a descrição do estilo BibLaTeX para a ABNT, versão e mantenedores"></div><figcaption><b>Figura 29</b> biblatex-abnt no CTAN (captura de 09/09/2026): estilo BibLaTeX para a ABNT, v4.0 no CTAN (o README cita 3.4); NBR 6023:2002 e 10520:2002 «100%»; exige Biber e BibLaTeX recentes; no TeX Live desde 2016; mantenedores Daniel B. Marques e Lucas Sales.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">preâmbulo — biblatex-abnt (troca o abntex2cite; compila com biber)</div><pre>\usepackage[style=abnt]{biblatex}
+\addbibresource{referencias.bib}
+…
+Texto \cite[10]{knauff2014}.        % com página
+…
+\printbibliography</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:170px">Customização conhecida (wiki)</th><th>Instituições</th></tr></thead><tbody>
+          <tr><td><b>Listadas na wiki</b></td><td>EESC/USP, ICMC-USP, PUC Minas, UFC, UECE, FGA-UnB, CEFET-MG, IME, EPUSP, Unesp POSMAT, UFSC (ufscthesisx), IPT, UFV, Unisul, UNIJUI</td></tr>
+          <tr><td><b>IME-USP</b></td><td><code>modelo-latex</code> do CCSL (GitLab; licença MIT; teses e dissertações; ABNT)</td></tr>
+          <tr><td><b>Tutoriais da wiki</b></td><td>Pré-textuais em romanos, cabeçalhos, «Lista de», códigos-fonte, teoremas, fontes com XeLaTeX, LyX, Pandoc, <span class="gterm" tabindex="0" data-t="PDF/A" data-d="Variante do PDF para arquivamento de longo prazo, exigida por alguns repositórios; a wiki do abnTeX2 tem tutorial.">PDF/A</span> e PDF/X, múltiplos índices</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p><code>abntex2cite</code> (BibTeX) e <code>biblatex-abnt</code> (<span class="gterm" tabindex="0" data-t="Biber" data-d="Processador bibliográfico do biblatex, com UTF-8 completo.">Biber</span>) não convivem no mesmo documento: escolha um. O <code>abntex2cite</code> é o que os modelos canônicos e a maioria dos modelos institucionais usam; o <code>biblatex-abnt</code> é a via para quem já trabalha com <span class="gterm" tabindex="0" data-t="biblatex" data-d="Alternativa moderna ao BibTeX, com o processador Biber; o biblatex-abnt é o estilo ABNT para ele.">biblatex</span> ou precisa de recursos que o BibTeX não tem. Nos dois casos, o <code>.bib</code> vem do Zotero (Parte 4).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s31" data-title="Erros comuns do abnTeX2">
+  <div class="inner">
+    <div class="kicker-part rv">abnTeX2<span>10 de 10 · erros vistos e resolvidos na demonstração de 09/09/2026 · FAQ do abnTeX2</span></div>
+    <h2 class="rv">Erros comuns do abnTeX2: pacote que falta, <code>babel</code> sem <code>english</code>, codificação — e o que fazer</h2>
+    <div class="tw rv"><table><thead><tr><th style="width:330px">Mensagem</th><th>Onde acontece</th><th>Causa</th><th style="width:300px">Correção</th></tr></thead><tbody>
+      <tr><td><code>! LaTeX Error: File `xpatch.sty' not found</code></td><td>TinyTeX ou instalação mínima</td><td>A classe usa <code>xpatch</code> e ele não está instalado</td><td><span class="pill p-blue"><span class="gterm" tabindex="0" data-t="tlmgr" data-d="Gerenciador de pacotes do TeX Live e do TinyTeX: tlmgr install abntex2.">tlmgr</span> install xpatch</span></td></tr>
+      <tr><td><code>File `enumitem.sty' not found</code></td><td>Idem</td><td>Pacote de listas ausente</td><td><span class="pill p-blue"><span class="gterm" tabindex="0" data-t="tlmgr" data-d="Gerenciador de pacotes do TeX Live e do TinyTeX: tlmgr install abntex2.">tlmgr</span> install enumitem</span></td></tr>
+      <tr><td><code>babel: Unknown option `english'</code></td><td>Idem</td><td>A classe passa <code>english</code> ao babel e o idioma não está instalado</td><td><span class="pill p-blue">tlmgr install babel-english</span></td></tr>
+      <tr><td><code>File `tocbasic.sty' not found</code></td><td>Idem</td><td>Dependência do KOMA-Script</td><td><span class="pill p-blue">tlmgr install koma-script</span></td></tr>
+      <tr><td>Citações «??», sumário vazio</td><td>Qualquer instalação</td><td>Faltou bibtex ou passagem; ou <code>.log</code> antigo enganou o latexmk</td><td><span class="pill p-amber">sequência completa; latexmk -C e -f</span></td></tr>
+      <tr><td>Acentos trocados por símbolos</td><td>Arquivo salvo em outra codificação</td><td>O FAQ exige todos os arquivos em UTF-8</td><td><span class="pill p-amber">salvar em UTF-8; fontenc T1</span></td></tr>
+      <tr><td>Autor com acento fora de ordem ou sem acento nas referências</td><td><code>.bib</code></td><td>Acento não protegido</td><td><span class="pill p-blue">Ara{\'u}jo; Barbosa{ }Neto</span></td></tr>
+      <tr><td>Modelo não encontrado (<code>kpsewhich</code> vazio)</td><td>TinyTeX</td><td>Repositório sem documentação (<code>tlmgr option docfiles 1</code> falha)</td><td><span class="pill p-blue">baixar abntex2.zip do CTAN, pasta doc/examples</span></td></tr>
+      <tr><td>Overleaf: <em>timeout</em></td><td>Plano gratuito (10 s)</td><td>Modelo grande, figuras pesadas, lipsum</td><td><span class="pill p-amber">Stop on first error; Fast [draft]; compilar localmente</span></td></tr>
+      <tr><td>PDF «na norma» reprovado pela biblioteca</td><td>Qualquer instalação</td><td>abnTeX2 1.9.7 implementa NBR 6023:2002, 10520:2002 e 14724:2011</td><td><span class="pill p-stop">conferir as edições novas com a biblioteca; ajustar</span></td></tr>
+    </tbody></table></div>
+    <div class="two rv">
+      <div class="rule-box"><span class="blabel">Regra</span><p>Todo «File … not found» numa instalação local se resolve com <code>tlmgr install &lt;pacote&gt;</code> — o nome do pacote é, quase sempre, o nome do <code>.sty</code> sem a extensão. No Overleaf esses erros não existem: a <span class="gterm" tabindex="0" data-t="Distribuição" data-d="Conjunto instalável de motores, pacotes e ferramentas: TeX Live, MacTeX, MiKTeX, TinyTeX.">distribuição</span> é completa.</p></div>
+      <div class="note"><span class="blabel">Na demonstração deste manual (09/09/2026)</span><p>Os quatro primeiros erros da tabela apareceram, nessa ordem, ao compilar o modelo canônico no TinyTeX recém-instalado; cada <code>tlmgr install</code> resolveu o seu. O quinto apareceu na primeira tentativa com latexmk e se resolveu com <code>latexmk -C</code> seguido de <code>-f</code>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 4 ===================== -->
+<section class="slide divider" id="s32" data-title="Parte 4 · Do Zotero ao LaTeX e os scripts"><div class="inner"><div class="kicker-part rv">Parte 4<span>Do Zotero ao LaTeX e os scripts</span></div><h2 class="rv">Better BibTeX, o <code>.bib</code> no Overleaf, <code>novo_trabalho.py</code>, <code>compilar.sh</code>, <code>checar_citacoes.py</code>, TinyTeX, VS Code, pandoc e Git</h2><p class="rv">As referências saem do Zotero com chaves estáveis e entram no <code>.bib</code>; três scripts curtos criam a pasta do trabalho a partir do modelo canônico, compilam e conferem as citações; a instalação local com o TinyTeX tira o limite de tempo do Overleaf. Tudo rodado de verdade em 09/09/2026.</p></div><div class="num">04</div></section>
+
+<section class="slide" id="s33" data-title="Better BibTeX: chaves estáveis e Keep updated">
+  <div class="inner">
+    <div class="kicker-part rv">Do Zotero ao LaTeX<span>1 de 9 · retorque.re/zotero-better-bibtex · release v9.0.63 (26/08/2026) · captura de 09/09/2026</span></div>
+    <h2 class="rv">Better BibTeX for Zotero: chaves de citação estáveis, «Pin BibTeX key» e exportação automática com «Keep updated»</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_25_better_bibtex.jpg" width="1920" height="938" alt="Site do Better BibTeX for Zotero com a descrição do plugin, o link de instalação e a documentação"></div><figcaption><b>Figura 30</b> O site do Better BibTeX (captura de 09/09/2026): o plugin do Zotero que gera chaves de citação previsíveis e mantém o <code>.bib</code> sincronizado; release v9.0.63 de 26/08/2026. Zotero 10 (17/08/2026), 9 (10/04/2026) e 8 (22/01/2026) são as versões correntes.</figcaption></figure>
+      <div>
+        <ol>
+          <li>Baixe o <code>.xpi</code> no site e, no Zotero, vá em «Ferramentas» → «Plugins» → engrenagem → «Install Plugin From File…».</li>
+          <li>Cada item recebe uma chave pelo padrão <code>auth.lower + shorttitle(3,3) + year</code> (por exemplo, <code>knauffEfficiencyComparisonDocument2014</code>); «Pin BibTeX key» fixa a chave para que ela nunca mude.</li>
+          <li>Clique com o botão direito na coleção → «Export Collection…» → formato «Better BibTeX» (ou «Better <span class="gterm" tabindex="0" data-t="biblatex" data-d="Alternativa moderna ao BibTeX, com o processador Biber; o biblatex-abnt é o estilo ABNT para ele.">BibLaTeX</span>» para o biblatex-abnt) → marque «Keep updated» → salve como <code>referencias.bib</code> na pasta do trabalho.</li>
+          <li>A partir daí, toda mudança na coleção reescreve o <code>.bib</code>: acentos e HTML dos títulos são convertidos para LaTeX na exportação.</li>
+        </ol>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Uma coleção do Zotero por trabalho, um <code>.bib</code> por trabalho, chaves fixadas nos itens que você já citou. Na versão 8 do Better BibTeX, a chave passou a viver no campo nativo de <span class="gterm" tabindex="0" data-t="Chave de citação" data-d="Identificador da entrada no .bib usado em \cite{}; o Better BibTeX a gera e a fixa.">chave de citação</span> do Zotero 8 — não a edite à mão.</p></div>
+        <div class="note"><span class="blabel">Manual irmão</span><p>Instalar o Zotero, organizar coleções, corrigir metadados e o estilo ABNT para Word: <a href="https://zotero.mirandastech.com.br/">manual do Zotero</a>; no plugin, o Bibliotecário audita a biblioteca antes da exportação.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s34" data-title="O .bib no Overleaf: Upload ou integração">
+  <div class="inner">
+    <div class="kicker-part rv">Do Zotero ao LaTeX<span>2 de 9 · docs.overleaf.com, integração Zotero · captura de 09/09/2026</span></div>
+    <h2 class="rv">O <code>.bib</code> no Overleaf: sem premium, «Upload» do arquivo exportado; com premium, a integração «Zotero Integration»</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_16_docs_zotero.jpg" width="1920" height="938" alt="Documentação do Overleaf sobre a integração com o Zotero, um recurso premium, com os passos em Account Settings e Reference Managers"></div><figcaption><b>Figura 31</b> A página da integração com o Zotero em docs.overleaf.com (captura de 09/09/2026): recurso premium; configura-se em «Account Settings» → «Reference Managers».</figcaption></figure>
+      <div>
+        <div class="compare">
+          <div><div class="cmp-h">Sem premium (gratuito)</div><ul>
+            <li>Exporte com o Better BibTeX («Keep updated») para <code>referencias.bib</code>.</li>
+            <li>No projeto, painel de arquivos → «Upload» → escolha o <code>.bib</code>; repita quando a biblioteca mudar (o Overleaf substitui o arquivo de mesmo nome).</li>
+            <li>Ou mantenha o <code>.bib</code> numa pasta sincronizada e faça o upload de lá.</li>
+            <li>No <code>main.tex</code>: <code>\bibliography{referencias}</code>.</li>
+          </ul></div>
+          <div><div class="cmp-h">Com premium</div><ul>
+            <li>«Account Settings» → «Reference Managers» → «Zotero Integration» → login no Zotero → «Accept Defaults».</li>
+            <li>No projeto: importe «My Library» ou um grupo como <code>.bib</code> somente leitura, com o botão «Refresh» para atualizar.</li>
+            <li>Ou busque referências individuais para inserir a citação.</li>
+            <li>Também Mendeley, ReadCube, Dropbox, Git e GitHub Sync.</li>
+          </ul></div>
+        </div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O <code>.bib</code> importado pela integração é somente leitura: corrija metadados no Zotero, nunca no Overleaf. No fluxo gratuito, a chave estável do Better BibTeX é o que garante que <code>\cite{knauff2014}</code> continue valendo depois de cada upload.</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Editar o <code>.bib</code> no Overleaf e depois reexportar do Zotero.</strong> A reexportação sobrescreve tudo. A fonte da verdade é a biblioteca; o <code>.bib</code> é derivado.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s35" data-title="novo_trabalho.py">
+  <div class="inner">
+    <div class="kicker-part rv">Do Zotero ao LaTeX<span>3 de 9 · demonstração de 09/09/2026 · Python 3, só biblioteca padrão</span></div>
+    <h2 class="rv"><code>novo_trabalho.py</code>: cria a pasta do trabalho a partir do modelo canônico, já com os seus dados — e compila</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_33_demo_capa_folharosto.jpg" width="1920" height="938" alt="Capa e folha de rosto da dissertação de demonstração gerada pelo novo_trabalho.py, com dados fictícios: Nome do Estudante, Universidade Exemplo"></div><figcaption><b>Figura 32</b> Capa e folha de rosto de «minha-dissertacao», gerada pelo <code>novo_trabalho.py</code> na demonstração deste manual (captura de 09/09/2026) — dados fictícios: «Nome do Estudante», «Universidade Exemplo», título «Manutenção preditiva de guindastes portuários com aprendizado de máquina: uma revisão sistemática».</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">terminal — o comando da demonstração (no TinyTeX, passe --modelo com o arquivo do CTAN)</div><pre>python3 novo_trabalho.py minha-dissertacao \
+    --titulo "Manutenção preditiva de guindastes portuários com aprendizado de máquina: uma revisão sistemática" \
+    --autor "Nome do Estudante" --instituicao "Universidade Exemplo" \
+    --orientador "Profa. Dra. Nome da Orientadora" --local "Cidade" \
+    --tipo "Dissertação (Mestrado)" --programa "Programa de Pós-Graduação em Engenharia" \
+    --modelo abntex2/doc/examples/abntex2-modelo-trabalho-academico.tex
+# criado: minha-dissertacao/main.tex (dados preenchidos), referencias.bib, capitulos/, figuras/
+# compilado: main.pdf</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:150px">Argumento</th><th>Uso</th></tr></thead><tbody>
+          <tr><td><code>pasta</code></td><td>Pasta a criar (com <code>capitulos/</code> e <code>figuras/</code>)</td></tr>
+          <tr><td><code>--titulo</code> · <code>--autor</code></td><td>Obrigatórios: vão para <code>\titulo</code> e <code>\autor</code></td></tr>
+          <tr><td><code>--instituicao</code> · <code>--orientador</code> · <code>--local</code> · <code>--tipo</code> · <code>--programa</code> · <code>--data</code></td><td>Preenchem <code>\instituicao</code>, <code>\orientador</code>, <code>\local</code>, <code>\tipotrabalho</code>, <code>\preambulo</code> e <code>\data</code> (padrão: ano corrente)</td></tr>
+          <tr><td><code>--modelo</code></td><td>Caminho do <code>abntex2-modelo-trabalho-academico.tex</code>; sem ele, o script procura na distribuição com <code>kpsewhich</code></td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O script copia o modelo, troca <code>abntex2-modelo-references</code> por <code>referencias</code> e a marca por <code>figuras/marca.pdf</code>, e compila com <code>latexmk</code> se ele existir; sem latexmk, avisa: «envie a pasta ao Overleaf (New Project → Upload Project) ou instale o TinyTeX». O <code>referencias.bib</code> copiado é o de exemplo do abnTeX2 — substitua pelo exportado do Zotero.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s36" data-title="compilar.sh">
+  <div class="inner">
+    <div class="kicker-part rv">Do Zotero ao LaTeX<span>4 de 9 · demonstração de 09/09/2026 · bash + latexmk + pdfinfo</span></div>
+    <h2 class="rv"><code>compilar.sh</code>: <code>latexmk</code> com <code>-f</code>, só as linhas de erro na tela e «ok: main.pdf (N páginas)» no fim</h2>
+    <div class="two rv">
+      <div>
+        <div class="code"><div class="code-head">terminal — uso (na pasta do trabalho)</div><pre>bash compilar.sh main.tex            # gera main.pdf
+bash compilar.sh main.tex --limpar   # apaga os auxiliares (.aux, .bbl, .log…) antes: latexmk -C
+bash compilar.sh main.tex --xelatex  # XeLaTeX (fontes do sistema)
+bash compilar.sh main.tex --lualatex # LuaLaTeX
+# saída: ok: main.pdf (83 páginas)   ou   falhou: veja main.log</pre></div>
+        <div class="code"><div class="code-head">compilar.sh — o que ele executa por dentro</div><pre>latexmk -pdf -f -interaction=nonstopmode -file-line-error main.tex \
+  | grep -E "^(Latexmk: (Run number|All targets)|\./.*:[0-9]+: |! )"
+pdfinfo main.pdf | awk '/^Pages/{print $2}'   # conta as páginas</pre></div>
+      </div>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:170px">Opção</th><th>O que faz</th></tr></thead><tbody>
+          <tr><td><code>-pdf</code> · <code>-xelatex</code> · <code>-lualatex</code></td><td>Escolhe o motor (pdfLaTeX é o padrão)</td></tr>
+          <tr><td><code>-f</code></td><td>Força a compilação mesmo com erros e mesmo com <code>.log</code> antigo — a armadilha da Parte 3</td></tr>
+          <tr><td><code>-interaction=nonstopmode</code></td><td>Não para esperando resposta no terminal</td></tr>
+          <tr><td><code>-file-line-error</code></td><td>Erros no formato <code>./arquivo.tex:linha: mensagem</code>, que o <code>grep</code> do script mostra</td></tr>
+          <tr><td><code>--limpar</code></td><td><code>latexmk -C</code> antes: apaga auxiliares; use quando o resultado parecer velho</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O script sai com erro se o <code>latexmk</code> não existir («instale o TeX Live/TinyTeX (tlmgr install latexmk)») ou se o PDF não for gerado; nesse caso, o <code>main.log</code> tem a mensagem completa. Na demonstração, a dissertação gerada pelo <code>novo_trabalho.py</code> foi compilada com <code>--limpar</code>; o número de páginas está na figura do próximo slide.</p></div>
+        <div class="note"><span class="blabel">Sem latexmk?</span><p><code>tlmgr install latexmk</code> no TeX Live ou TinyTeX; no MiKTeX, o Package Manager. O <code>pdfinfo</code> (poppler) só conta páginas: sem ele, o script imprime «ok» sem o número.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s37" data-title="checar_citacoes.py">
+  <div class="inner">
+    <div class="kicker-part rv">Do Zotero ao LaTeX<span>5 de 9 · demonstração de 09/09/2026 · Python 3, só biblioteca padrão</span></div>
+    <h2 class="rv"><code>checar_citacoes.py</code>: chaves citadas sem entrada no <code>.bib</code> (deve dar zero) e entradas nunca citadas</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_t3_scripts.jpg" width="1920" height="640" alt="Terminal: execução de novo_trabalho.py, compilar.sh e checar_citacoes.py com as saídas reais — pasta criada e compilada, ok main.pdf com o número de páginas, e 7 citadas, 28 entradas, 0 faltando, 21 nunca citadas"></div><figcaption><b>Figura 33</b> Os três scripts rodando na demonstração deste manual (captura de 09/09/2026): <code>novo_trabalho.py</code> cria e compila «minha-dissertacao»; <code>compilar.sh --limpar</code> imprime «ok: main.pdf» com o número de páginas; <code>checar_citacoes.py</code> conta 7 chaves citadas, 28 entradas no <code>.bib</code>, 0 faltando e 21 nunca citadas.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">terminal — uso e saída da demonstração</div><pre>python3 checar_citacoes.py main.tex referencias.bib
+# citadas no texto: 7 · entradas no .bib: 28
+# citadas sem entrada no .bib (0): —
+# no .bib e nunca citadas (21): … (as 15 primeiras chaves) …
+# código de saída 1 se houver chave citada sem entrada — serve para um script de entrega</pre></div>
+        <ul class="bul">
+          <li>Segue <code>\input</code> e <code>\include</code> a partir do <code>main.tex</code>; ignora o que está depois de <code>%</code>.</li>
+          <li>Entende <code>\cite</code>, <code>\citeonline</code>, <code>\citep</code>, <code>\citet</code>, <code>\parencite</code>, <code>\textcite</code>, <code>\autocite</code> e <code>\nocite</code>, com várias chaves separadas por vírgula.</li>
+          <li><strong>Citada sem entrada</strong> vira «??» no PDF: corrija a chave ou exporte o item do Zotero.</li>
+          <li class="warn"><strong>Nunca citada</strong> não aparece nas Referências — a ABNT lista só o que foi citado. Se o item precisa constar, cite-o; se não, tudo bem que sobre no <code>.bib</code>.</li>
+        </ul>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Rode antes de cada entrega: o primeiro número que importa é o «citadas sem entrada», que tem de ser 0. Os 21 «nunca citados» da demonstração são o <code>.bib</code> de exemplo do abnTeX2 — no seu trabalho, a lista mostra o que ficou na biblioteca sem entrar no texto.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s38" data-title="Instalação local com o TinyTeX">
+  <div class="inner">
+    <div class="kicker-part rv">Do Zotero ao LaTeX<span>6 de 9 · yihui.org/tinytex · demonstração de 09/09/2026 (Linux, sem R)</span></div>
+    <h2 class="rv">Instalação local com o TinyTeX: um comando instala, <code>tlmgr install</code> traz o abnTeX2 e o resto</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_t1_instalar_tinytex.jpg" width="1920" height="620" alt="Terminal: instalação do TinyTeX pelo script install-bin-unix.sh e instalação de pacotes com tlmgr, entre eles abntex2, biblatex-abnt, babel-portuges e latexmk"></div><figcaption><b>Figura 34</b> A instalação na demonstração deste manual (captura de 09/09/2026): o script <code>install-bin-unix.sh</code> baixa 51,6 MB e instala em <code>~/.TinyTeX</code>; em seguida, <code>tlmgr install</code> com abntex2 e os demais pacotes. Resultado: <code>pdfTeX 3.141592653-2.6-1.40.29 (TeX Live 2026)</code>, <code>tlmgr revision 79639</code>.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">terminal — Linux sem R (macOS: o mesmo script; Windows: instalador do site)</div><pre>wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+# instala em ~/.TinyTeX; abra um terminal novo para o PATH valer
+
+tlmgr install abntex2 biblatex-abnt babel-portuges hyphen-portuguese \
+  lipsum booktabs setspace microtype nomencl glossaries biblatex biber latexmk \
+  collection-fontsrecommended memoir textcase lastpage xpatch enumitem babel-english koma-script
+
+pdflatex --version | head -1     # pdfTeX 3.141592653-2.6-1.40.29 (TeX Live 2026)
+tlmgr --version | head -1        # tlmgr revision 79639</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:130px">Variante</th><th>Tamanho</th><th>Para quem</th></tr></thead><tbody>
+          <tr><td><b>TinyTeX-0</b></td><td>1–24 MB</td><td>Só a infraestrutura</td></tr>
+          <tr><td><b>TinyTeX-1</b></td><td>54–74 MB (~100 pacotes)</td><td>Documentos simples</td></tr>
+          <tr><td><b>TinyTeX</b> (padrão)</td><td>152–210 MB</td><td>O usado aqui: mais o que o <code>tlmgr</code> instalar</td></tr>
+          <tr><td><b>TinyTeX-2</b></td><td>1,7–1,9 GB</td><td>TeX Live completo, sem documentação</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Instale os pacotes da lista de uma vez: são os que o modelo canônico e o <code>biblatex-abnt</code> pediram na demonstração (os quatro últimos resolveram os erros da Parte 3). Os modelos do abnTeX2 vêm do CTAN (<code>abntex2.zip</code>, <code>doc/examples</code>), porque o repositório do TinyTeX não traz documentação.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s39" data-title="VS Code + LaTeX Workshop e outros editores">
+  <div class="inner">
+    <div class="kicker-part rv">Do Zotero ao LaTeX<span>7 de 9 · marketplace do VS Code · wiki do abnTeX2 · captura de 09/09/2026</span></div>
+    <h2 class="rv">VS Code + LaTeX Workshop: compila, sincroniza o PDF, autocompleta e mostra os erros — e os outros editores locais</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/lx_26_latex_workshop.jpg" width="1920" height="938" alt="Página da extensão LaTeX Workshop no marketplace do Visual Studio Code, com o botão Install e a descrição dos recursos"></div><figcaption><b>Figura 35</b> A extensão LaTeX Workshop no marketplace do VS Code (captura de 09/09/2026): compilação com latexmk, visualizador de PDF sincronizado, autocompletar e painel de erros — sobre uma distribuição já instalada (TinyTeX, TeX Live ou MiKTeX).</figcaption></figure>
+      <div>
+        <ol>
+          <li>Instale a distribuição (slide anterior) e o VS Code; em «Extensions», pesquise «LaTeX Workshop» → «Install».</li>
+          <li>Abra a pasta do trabalho («File» → «Open Folder…»); ao salvar o <code>main.tex</code>, a extensão compila com o latexmk e mostra o PDF ao lado.</li>
+          <li>Erros e avisos aparecem no painel «Problems», com o arquivo e a linha; o autocompletar sugere comandos, rótulos (<code>\ref</code>) e chaves do <code>.bib</code> (<code>\cite</code>).</li>
+        </ol>
+        <div class="tw"><table><thead><tr><th style="width:170px">Editor</th><th>Observação (wiki do abnTeX2)</th></tr></thead><tbody>
+          <tr><td><b>TeXstudio · Texmaker</b></td><td>Editores LaTeX completos, multiplataforma; a wiki tem instruções de configuração</td></tr>
+          <tr><td><b>TeXworks</b></td><td>Mínimo; vem com o MiKTeX e o TeX Live</td></tr>
+          <tr><td><b>Kile</b></td><td>Ambiente KDE (Linux)</td></tr>
+          <tr><td><b>LyX</b></td><td>Interface «o que você vê é o que você quer dizer»; a wiki tem tutorial para o abnTeX2</td></tr>
+          <tr><td><b>JabRef · BibDesk</b></td><td>Editores de <code>.bib</code> citados na wiki; aqui o <code>.bib</code> vem do Zotero</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Editor é preferência; distribuição é obrigação. Qualquer um dos editores compila o mesmo <code>main.tex</code> com a mesma sequência da Parte 3 — e o <code>compilar.sh</code> funciona ao lado de todos eles.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s40" data-title="pandoc: gerar .docx quando o programa exige Word">
+  <div class="inner">
+    <div class="kicker-part rv">Do Zotero ao LaTeX<span>8 de 9 · pandoc.org · wiki do abnTeX2 (tutorial Pandoc)</span></div>
+    <h2 class="rv">pandoc: gerar um <code>.docx</code> a partir do <code>.tex</code> quando o programa ou o orientador exige Word — com perdas conhecidas</h2>
+    <div class="two rv">
+      <div>
+        <div class="code"><div class="code-head">terminal — conversão básica e com as referências do .bib</div><pre>pandoc -s tese.tex -o tese.docx
+pandoc -s tese.tex --citeproc --bibliography=referencias.bib -o tese.docx
+# o caminho inverso também existe: pandoc -s texto.docx -o texto.tex</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:170px">O que sobrevive</th><th>O que se perde ou muda</th></tr></thead><tbody>
+          <tr><td>Texto, seções, listas, ênfases, notas, tabelas simples, equações, citações (com <code>--citeproc</code>)</td><td>Capa, folha de rosto, ficha, listas automáticas e a forma ABNT da classe; tabelas complexas; comandos próprios do abnTeX2 (<code>\citeonline</code>, ambientes pré-textuais); posição das figuras</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Use o pandoc para <em>revisão</em>: o orientador comenta no Word, você traz as mudanças de volta ao <code>.tex</code>. Para a <em>entrega</em> em Word, combine com o programa antes de escolher o LaTeX (Parte 1): a conversão é com perdas, e a formatação ABNT terá de ser refeita no <code>.docx</code>, tarefa do <a href="https://metodologia.mirandastech.com.br/">manual de Metodologia</a> e do <a href="https://zotero.mirandastech.com.br/">manual do Zotero</a> (estilo ABNT no Word).</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Manter duas versões vivas.</strong> Depois da primeira conversão, quem edita o <code>.docx</code> e quem edita o <code>.tex</code> divergem em dias. Escolha um formato-fonte; o outro é sempre gerado.</p></div>
+        <div class="note"><span class="blabel">Sobre o comando</span><p><code>-s</code> gera um documento completo (standalone); <code>--citeproc</code> resolve as citações com o <code>.bib</code> indicado em <code>--bibliography</code>. A wiki do abnTeX2 tem um tutorial dedicado ao Pandoc.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s41" data-title="Git para versionar">
+  <div class="inner">
+    <div class="kicker-part rv">Do Zotero ao LaTeX<span>9 de 9 · Blischak, Davenport e Wilson (2016); Wilson et al. (2017)</span></div>
+    <h2 class="rv">Git para versionar: o <code>.tex</code> é texto simples — cada versão do trabalho fica registrada, com <em>diff</em> e volta atrás</h2>
+    <div class="two rv">
+      <div>
+        <div class="code"><div class="code-head">terminal — o mínimo (Blischak, Davenport e Wilson, 2016)</div><pre>cd minha-dissertacao
+git init
+printf '*.aux\n*.bbl\n*.blg\n*.log\n*.out\n*.toc\n*.lof\n*.lot\n*.fls\n*.fdb_latexmk\n*.synctex.gz\n' &gt; .gitignore
+git add main.tex referencias.bib capitulos figuras .gitignore
+git commit -m "Estrutura inicial a partir do modelo abnTeX2"
+
+# a cada sessão de escrita
+git add -A &amp;&amp; git commit -m "Capítulo 2: método (rascunho)"
+git log --oneline            # o histórico
+git diff HEAD~1 -- capitulos/2-metodo.tex   # o que mudou desde o commit anterior</pre></div>
+      </div>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:190px">Situação</th><th>O que o Git dá</th></tr></thead><tbody>
+          <tr><td><b>«Ontem estava melhor»</b></td><td><code>git diff</code> mostra o que mudou; <code>git checkout</code> traz a versão de volta</td></tr>
+          <tr><td><b>Orientador e estudante</b></td><td>Cada um com a sua cópia; o histórico registra quem mudou o quê (GitHub, GitLab ou o repositório da instituição)</td></tr>
+          <tr><td><b>Overleaf</b></td><td>Integração Git (clonar o projeto como remoto) e GitHub Sync são premium; no gratuito, baixe o <code>.zip</code> e faça o commit localmente</td></tr>
+          <tr><td><b>Entrega</b></td><td>Uma <em>tag</em> por versão entregue (qualificação, defesa, versão final)</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Versione o que é fonte (<code>.tex</code>, <code>.bib</code>, figuras, scripts) e ignore o que é gerado (auxiliares; o PDF, se preferir). Wilson et al. (2017) resumem: manuscrito em texto simples, sob controle de versão, com mensagens de commit que digam o que mudou. O histórico do Overleaf gratuito dura 24 h; o do Git dura o que você quiser.</p></div>
+        <div class="note"><span class="blabel">Manual irmão</span><p>Se a pesquisa tem dados e código, o repositório é o mesmo: a organização das pastas (<code>01_buscas/</code>, <code>07_manuscrito/</code>…) segue o <a href="https://plugin.mirandastech.com.br/">plugin</a> e o <a href="https://prisma.mirandastech.com.br/">manual de PRISMA</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 5 ===================== -->
+<section class="slide divider" id="s42" data-title="Parte 5 · Fechamento"><div class="inner"><div class="kicker-part rv">Parte 5<span>Fechamento</span></div><h2 class="rv">Plugin, erros comuns, checklist, glossário e referências</h2><p class="rv">Como o plugin Pesquisa MirandasTech conduz a fase de escrita com este manual como fonte; o que costuma dar errado; a lista para conferir antes de entregar; os termos; as fontes — e como citar.</p></div><div class="num">05</div></section>
+
+<section class="slide" id="s43" data-title="Tudo num só plugin">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>1 de 7</span></div>
+    <h2 class="rv">Tudo num só plugin: o Pesquisador conduz a fase 8, «Escrita ABNT», com este manual como fonte</h2>
+    <div class="two rv">
+      <div>
+        <p class="lead">O <a href="https://plugin.mirandastech.com.br/">plugin Pesquisa MirandasTech</a> (para Claude Code e Codex) coloca os papéis dos manuais dentro do assistente, com um estado único (<code>PROGRESSO.md</code>) e um gerente — o Pesquisador — que só fecha uma fase com evidência. Na fase 8 ele espera o que este manual manda produzir: o projeto LaTeX que compila sem «??», o <code>.bib</code> vindo do Zotero com chaves estáveis, o <code>checar_citacoes.py</code> em zero faltantes e as normas conferidas. A skill <code>abnt-citacoes-referencias</code> cuida das citações; a nova skill <code>latex-overleaf-abntex2</code> segue este manual; o Bibliotecário configura o Better BibTeX.</p>
+        <div class="tw"><table><thead><tr><th style="width:190px">Papel</th><th>O que faz com este manual</th><th style="width:150px">Slides</th></tr></thead><tbody>
+          <tr><td><b>Pesquisador</b> (fase 8)</td><td>Confere que o <code>main.tex</code> compila, que o <code>.bib</code> vem do Zotero, que <code>checar_citacoes.py</code> dá 0 faltantes e que o uso de IA está declarado</td><td>Partes 3 e 4</td></tr>
+          <tr><td><b>Skill abnt-citacoes-referencias</b></td><td>Citações e referências ABNT no texto — com <code>abntex2cite</code> no LaTeX</td><td>Parte 3</td></tr>
+          <tr><td><b>Skill latex-overleaf-abntex2</b></td><td>Cria a pasta com <code>novo_trabalho.py</code>, compila com <code>compilar.sh</code>, lê o log, orienta o Overleaf</td><td>Partes 2 a 4</td></tr>
+          <tr><td><b>Bibliotecário</b></td><td>Instala o Better BibTeX, fixa chaves, exporta o <code>.bib</code> com «Keep updated»</td><td>Parte 4</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <div class="code"><div class="code-head">Claude Code — pedidos na pasta do projeto (o plugin lê PROGRESSO.md)</div><pre>Pesquisador, onde paramos?
+Pesquisador, o que falta para fechar a fase 8?
+Bibliotecário, exporte a coleção «Dissertação» com o Better BibTeX e mantenha atualizado.
+Compile o main.tex com o compilar.sh e me mostre só os erros.
+/pesquisa:status
+/pesquisa:proxima</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O plugin não escreve a dissertação: ele confere que o projeto compila, que as citações fecham e que a estrutura é a da norma. O texto, a escolha do modelo e a decisão sobre cada ajuste de forma continuam sendo seus.</p></div>
+        <div class="note"><span class="blabel">Onde cada manual entra</span><p><a href="https://metodologia.mirandastech.com.br/">Metodologia</a> decide a estrutura; <a href="https://busca.mirandastech.com.br/">Busca</a> e <a href="https://prisma.mirandastech.com.br/">PRISMA</a> produzem o conteúdo; <a href="https://zotero.mirandastech.com.br/">Zotero</a> guarda as referências; este manual escreve em LaTeX; <a href="https://manual.mirandastech.com.br/">Uso de IA</a> declara; o <a href="https://plugin.mirandastech.com.br/">plugin</a> mantém a ordem. Hub: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s44" data-title="Erros comuns">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>2 de 7</span></div>
+    <h2 class="rv">Erros comuns — como aparecem e como corrigir</h2>
+    <div class="tw rv"><table><thead><tr><th>Erro</th><th>Como aparece</th><th>Causa</th><th style="width:260px">Correção</th></tr></thead><tbody>
+      <tr><td>Escolher o LaTeX para «ir mais rápido»</td><td>Semanas aprendendo, texto parado</td><td>Expectativa errada (Knauff; Nejasmic, 2014)</td><td><span class="pill p-blue">decidir pelo documento; começar por modelo pronto</span></td></tr>
+      <tr><td>Começar do zero sem modelo</td><td>Capa, sumário e margens fora da norma</td><td>Não procurou o modelo da instituição nem o abnTeX2</td><td><span class="pill p-blue">modelo institucional ou abnTeX2 canônico</span></td></tr>
+      <tr><td>Sem <code>fontenc</code> T1</td><td>Acentos que não se buscam nem se copiam no PDF</td><td>Codificação de fonte padrão</td><td><span class="pill p-blue">\usepackage[T1]{fontenc}</span></td></tr>
+      <tr><td>Arquivo fora de UTF-8</td><td>Acentos trocados por símbolos</td><td>Editor salvou em outra codificação</td><td><span class="pill p-amber">salvar em UTF-8 (FAQ do abnTeX2)</span></td></tr>
+      <tr><td>Citações «??»</td><td>Interrogações no lugar do autor</td><td>Faltou bibtex/passagem, chave errada, ou <code>.log</code> antigo</td><td><span class="pill p-amber">sequência completa; latexmk -C e -f; checar_citacoes.py</span></td></tr>
+      <tr><td>Número de figura escrito à mão</td><td>«Figura 3» que virou a 4 depois de inserir outra</td><td>Não usou <code>\label</code>/<code>\ref</code></td><td><span class="pill p-blue">\label no alvo, \ref no texto, compilar duas vezes</span></td></tr>
+      <tr><td><code>&amp;</code> no texto</td><td><code>Misplaced alignment tab character &amp;</code></td><td>Caractere reservado</td><td><span class="pill p-blue">\&amp;</span></td></tr>
+      <tr><td><em>Timeout</em> no Overleaf gratuito</td><td>Compilação interrompida aos 10 s</td><td>Erros acumulados, imagens grandes, pacotes lentos</td><td><span class="pill p-amber">Stop on first error; Fast [draft]; PDF em vez de PNG; compilar localmente</span></td></tr>
+      <tr><td>Histórico perdido no Overleaf gratuito</td><td>Versão de anteontem inacessível</td><td>Histórico de 24 h</td><td><span class="pill p-amber">rotular versões; baixar o .zip; Git</span></td></tr>
+      <tr><td>Editar o <code>.bib</code> no Overleaf</td><td>Correção some na próxima exportação</td><td>O <code>.bib</code> é derivado do Zotero</td><td><span class="pill p-stop">corrigir no Zotero; reexportar</span></td></tr>
+      <tr><td><span class="gterm" tabindex="0" data-t="Chave de citação" data-d="Identificador da entrada no .bib usado em \cite{}; o Better BibTeX a gera e a fixa.">Chave de citação</span> que muda</td><td><code>\cite</code> que passa a dar «??» depois de reexportar</td><td>Chave gerada sem fixar</td><td><span class="pill p-blue">Better BibTeX: Pin BibTeX key</span></td></tr>
+      <tr><td>«File … not found» local</td><td>xpatch, enumitem, tocbasic, babel english</td><td>Instalação mínima (TinyTeX)</td><td><span class="pill p-blue">tlmgr install &lt;pacote&gt;</span></td></tr>
+      <tr><td>PDF «na norma» reprovado</td><td>Biblioteca aponta diferenças na NBR 6023 ou 10520</td><td>abnTeX2 1.9.7 implementa edições de 2002/2011</td><td><span class="pill p-stop">conferir as edições novas com a biblioteca; ajustar</span></td></tr>
+      <tr><td>Texto sensível no AI Assistant</td><td>Dados de participantes enviados a serviço externo</td><td>Não consultou orientador/comitê</td><td><span class="pill p-stop">perguntar antes; declarar o uso</span></td></tr>
+      <tr><td>Duas versões vivas (.tex e .docx)</td><td>Correções em um que não estão no outro</td><td>Conversão com pandoc sem formato-fonte definido</td><td><span class="pill p-blue">um formato-fonte; o outro é gerado</span></td></tr>
+    </tbody></table></div>
+  </div>
+</section>
+
+<section class="slide" id="s45" data-title="Checklist final">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>3 de 7</span></div>
+    <h2 class="rv">Checklist final: antes de entregar o PDF</h2>
+    <p class="lead rv">Marque conforme concluir. O estado fica salvo neste navegador — não é compartilhado nem enviado a lugar nenhum.</p>
+    <div class="check rv" id="checklist">
+      <div class="check-item"><input type="checkbox" id="c01"><label for="c01"><b>Decisão</b>LaTeX escolhido pelo tipo de documento (longo, matemática, referências, norma), com o programa ciente do formato de entrega</label></div>
+      <div class="check-item"><input type="checkbox" id="c02"><label for="c02"><b>Modelo</b>Modelo da instituição ou canônico do abnTeX2; origem, autor, licença e data anotados no <code>main.tex</code></label></div>
+      <div class="check-item"><input type="checkbox" id="c03"><label for="c03"><b>Português</b><code>fontenc</code> T1, <code>babel</code> brazilian, arquivos em UTF-8; acentos buscáveis no PDF</label></div>
+      <div class="check-item"><input type="checkbox" id="c04"><label for="c04"><b>Dados</b><code>\titulo</code>, <code>\autor</code>, <code>\orientador</code>, <code>\instituicao</code>, <code>\local</code>, <code>\data</code>, <code>\tipotrabalho</code> e <code>\preambulo</code> preenchidos (ou <code>novo_trabalho.py</code> rodado)</label></div>
+      <div class="check-item"><input type="checkbox" id="c05"><label for="c05"><b>Estrutura</b>Pré-textuais na ordem do modelo, só os exigidos; <code>\textual</code>, capítulos em <code>\include</code>, <code>\postextual</code>, apêndices e anexos</label></div>
+      <div class="check-item"><input type="checkbox" id="c06"><label for="c06"><b>Referências</b><code>.bib</code> exportado do Zotero pelo Better BibTeX com chaves fixadas e «Keep updated»; nada editado à mão no <code>.bib</code></label></div>
+      <div class="check-item"><input type="checkbox" id="c07"><label for="c07"><b>Citações</b><code>checar_citacoes.py</code> com 0 citadas sem entrada; nenhum «??» no PDF; sem <code>\nocite{*}</code></label></div>
+      <div class="check-item"><input type="checkbox" id="c08"><label for="c08"><b>Figuras e tabelas</b>Todas com <code>\caption</code> e <code>\label</code>, citadas com <code>\ref</code>; nenhum número escrito à mão; imagens em PDF ou resolução adequada</label></div>
+      <div class="check-item"><input type="checkbox" id="c09"><label for="c09"><b>Compilação</b>Sequência completa (Overleaf «Recompile» ou <code>compilar.sh --limpar</code>); log sem erros; sumário e listas preenchidos</label></div>
+      <div class="check-item"><input type="checkbox" id="c10"><label for="c10"><b>Normas</b>Diferenças entre o abnTeX2 1.9.7 e as NBR 6023:2025, 10520:2023 e 14724:2024 conferidas com a biblioteca da instituição e ajustadas</label></div>
+      <div class="check-item"><input type="checkbox" id="c11"><label for="c11"><b>Versões</b>Versão rotulada no Overleaf ou commit no Git antes de cada entrega; <code>.zip</code> baixado com a data</label></div>
+      <div class="check-item"><input type="checkbox" id="c12"><label for="c12"><b>Entrega e IA</b>PDF final gerado; <code>.docx</code> via pandoc se exigido; uso do AI Assistant ou de outra IA declarado conforme o manual de Uso de IA</label></div>
+      <div class="check-foot"><span id="check-status">0 de 12</span><button type="button" id="check-reset">limpar</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s46" data-title="Glossário">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>4 de 7</span></div>
+    <h2 class="rv">Glossário</h2>
+    <p class="lead rv">Tudo que aparece no manual sem ser explicado no próprio slide.</p>
+    <div class="gl4 rv"><div><h4 style="margin-top:0">LaTeX, motores e distribuições</h4><dl class="gl"><dt>TeX</dt><dd>Sistema de composição tipográfica de Donald E. Knuth; a base sobre a qual o LaTeX é construído.</dd><dt>LaTeX</dt><dd>Sistema de preparação de documentos sobre o TeX (Lamport): classes, pacotes e comandos que separam conteúdo de forma; software livre sob a LPPL.</dd><dt>Motor</dt><dd>Programa que lê o <code>.tex</code> e produz o PDF: pdfLaTeX, XeLaTeX ou LuaLaTeX.</dd><dt>pdfLaTeX</dt><dd>Motor padrão; aceita .png, .jpg e .pdf e converte .eps; precisa de <code>fontenc</code> T1 para acentos reais.</dd><dt>XeLaTeX</dt><dd>Motor com UTF-8 nativo e fontes TrueType/OpenType do sistema via <code>fontspec</code>; aceita pstricks.</dd><dt>LuaLaTeX</dt><dd>Motor com UTF-8 nativo, fontes do sistema e a linguagem Lua dentro do documento.</dd><dt>Distribuição</dt><dd>Conjunto instalável de motores, pacotes e ferramentas: TeX Live, MacTeX, MiKTeX, TinyTeX.</dd><dt>TeX Live</dt><dd>Distribuição de referência, anual, do TeX Users Group; instalada com <code>install-tl</code> e gerida com <code>tlmgr</code>.</dd><dt>TinyTeX</dt><dd>TeX Live enxuto (152–210 MB no padrão) que instala em <code>~/.TinyTeX</code> e cresce com <code>tlmgr install</code>; o usado na demonstração.</dd><dt>MiKTeX</dt><dd>Distribuição para Windows, macOS e Linux que instala pacotes sob demanda.</dd><dt>Pacote</dt><dd>Extensão carregada com <code>\usepackage</code> (graphicx, hyperref, babel, abntex2cite…).</dd><dt>CTAN</dt><dd>Comprehensive TeX Archive Network: o repositório de onde as distribuições e o abnTeX2 são obtidos.</dd><dt>tlmgr</dt><dd>Gerenciador de pacotes do TeX Live e do TinyTeX: <code>tlmgr install abntex2</code>.</dd><dt>latexmk</dt><dd>Ferramenta que repete pdflatex, bibtex/biber e makeindex até o documento estabilizar; o Overleaf e o <code>compilar.sh</code> a usam.</dd><dt>Log (arquivo .log)</dt><dd>Registro completo de uma compilação, com erros e avisos; um <code>.log</code> antigo pode fazer o latexmk pular passagens.</dd><dt>PDF/A</dt><dd>Variante do PDF para arquivamento de longo prazo, exigida por alguns repositórios; a wiki do abnTeX2 tem tutorial.</dd></dl></div><div><h4 style="margin-top:0">Documento, referências e ferramentas</h4><dl class="gl"><dt>Preâmbulo</dt><dd>Tudo entre <code>\documentclass</code> e <code>\begin{document}</code>: pacotes e definições; nada dele aparece no PDF.</dd><dt>Classe</dt><dd>A primeira linha do documento (<code>article</code>, <code>report</code>, <code>book</code>, <code>abntex2</code>): define a estrutura e a forma geral.</dd><dt>Ambiente</dt><dd>Par <code>\begin{nome}</code> … <code>\end{nome}</code> (figure, table, itemize, equation, resumo).</dd><dt>Comando (macro)</dt><dd>Instrução iniciada por <code>\</code>, com argumentos entre chaves e opções entre colchetes.</dd><dt>Float</dt><dd>Objeto que o LaTeX posiciona onde couber (figure, table); daí a legenda e o <code>[htbp]</code>.</dd><dt>Referência cruzada</dt><dd><code>\label{}</code> no alvo e <code>\ref{}</code> ou <code>\pageref{}</code> no texto; resolve-se na segunda compilação.</dd><dt>BibTeX</dt><dd>Programa que lê o <code>.bib</code> e gera a lista de referências no estilo escolhido; é o que o <code>abntex2cite</code> usa.</dd><dt>biblatex</dt><dd>Alternativa moderna ao BibTeX, com o processador Biber; o <code>biblatex-abnt</code> é o estilo ABNT para ele.</dd><dt>Biber</dt><dd>Processador bibliográfico do biblatex, com UTF-8 completo.</dd><dt>Arquivo .bib</dt><dd>Base de referências em texto: uma entrada por obra (<code>@article</code>, <code>@book</code>…) com chave e campos; aqui, exportado do Zotero.</dd><dt>Chave de citação</dt><dd>Identificador da entrada no <code>.bib</code> usado em <code>\cite{}</code>; o Better BibTeX a gera e a fixa.</dd><dt>abnTeX2</dt><dd>Suíte brasileira: a classe <code>abntex2</code> (sobre a memoir) e o pacote <code>abntex2cite</code>; versão 1.9.7 (2018).</dd><dt>abntex2cite</dt><dd>Pacote de citações e referências ABNT do abnTeX2; estilos <code>alf</code> (autor-data) e <code>num</code> (numérico).</dd><dt>memoir</dt><dd>Classe LaTeX para livros e teses sobre a qual a <code>abntex2</code> é construída.</dd><dt>Overleaf</dt><dd>Editor LaTeX colaborativo on-line (Digital Science): compila na nuvem, galeria de modelos, compartilhamento; planos gratuito e pagos.</dd><dt>Template</dt><dd>Modelo pronto da galeria do Overleaf ou do abnTeX2; «Open as Template» cria uma cópia sua.</dd><dt>Track changes</dt><dd>Controle de alterações do Overleaf (premium): modos Editing e Reviewing, aceitar ou rejeitar mudanças.</dd><dt>Better BibTeX</dt><dd>Plugin do Zotero que gera chaves de citação estáveis, fixa chaves e exporta o <code>.bib</code> com «Keep updated».</dd></dl></div></div>
+  </div>
+</section>
+
+<section class="slide" id="s47" data-title="Referências (1 de 2)">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>5 de 7 · fontes conferidas em 09/09/2026</span></div>
+    <h2 class="rv">Referências (1 de 2): evidência sobre o LaTeX, práticas de escrita e os livros de origem</h2>
+    <ol class="refs rv" start="1">
+      <li><span class="rt">KNAUFF, M.; NEJASMIC, J. An Efficiency Comparison of Document Preparation Systems Used in Academic Research and Development. <em>PLoS ONE</em>, v. 9, n. 12, e115069, 2014.</span><a href="https://doi.org/10.1371/journal.pone.0115069">doi.org/10.1371/journal.pone.0115069</a></li>
+      <li><span class="rt">WILSON, G.; BRYAN, J.; CRANSTON, K. et al. Good enough practices in scientific computing. <em>PLoS Computational Biology</em>, v. 13, n. 6, e1005510, 2017.</span><a href="https://doi.org/10.1371/journal.pcbi.1005510">doi.org/10.1371/journal.pcbi.1005510</a></li>
+      <li><span class="rt">BLISCHAK, J. D.; DAVENPORT, E. R.; WILSON, G. A Quick Introduction to Version Control with Git and GitHub. <em>PLoS Computational Biology</em>, v. 12, n. 1, e1004668, 2016.</span><a href="https://doi.org/10.1371/journal.pcbi.1004668">doi.org/10.1371/journal.pcbi.1004668</a></li>
+      <li><span class="rt">CHEREM, Y. A. A utilização do sistema de preparação de textos LaTeX na produção de textos acadêmicos no Brasil: uma investigação preliminar e perspectivas. <em>Informação &amp; Informação</em>, v. 20, n. 1, p. 228, 2015.</span><a href="https://doi.org/10.5433/1981-8920.2015v20n1p228">doi.org/10.5433/1981-8920.2015v20n1p228</a></li>
+      <li><span class="rt">SANTOS, F. E. P.; LIMA, J. S.; RODRIGUES, E. M. Desafios e possibilidades da atividade mediadora do bibliotecário na normalização de trabalhos acadêmicos: o uso do LaTeX. <em>InCID: Revista de Ciência da Informação e Documentação</em>, v. 9, n. 1, p. 25-51, 2018.</span><a href="https://doi.org/10.11606/issn.2178-2075.v9i1p25-51">doi.org/10.11606/issn.2178-2075.v9i1p25-51</a></li>
+      <li><span class="rt">ZHENG, Y. Academic Writing by Using Latex: A Hands-on Workshop. In: <em>The 24th Annual Conference on Information Technology Education</em>, 2023.</span><a href="https://doi.org/10.1145/3585059.3611425">doi.org/10.1145/3585059.3611425</a></li>
+      <li><span class="rt">KNUTH, D. E. <em>The TeXbook</em>. Reading: Addison-Wesley, 1986.</span></li>
+      <li><span class="rt">LAMPORT, L. <em>LaTeX: a document preparation system</em>. 2. ed. Reading: Addison-Wesley, 1994.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide alt" id="s48" data-title="Referências (2 de 2)">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>6 de 7 · fontes conferidas em 09/09/2026</span></div>
+    <h2 class="rv">Referências (2 de 2): abnTeX2, biblatex-abnt, TinyTeX, documentação do Overleaf e as normas</h2>
+    <ol class="refs rv" start="9">
+      <li><span class="rt">ARAUJO, L. C. (mantenedor). <em>abnTeX2: classe LaTeX e estilo bibliográfico compatíveis com as normas da ABNT</em>. Versão 1.9.7, 2018.</span><a href="https://ctan.org/pkg/abntex2">ctan.org/pkg/abntex2</a> <a href="https://www.abntex.net.br/">abntex.net.br</a></li>
+      <li><span class="rt">MARQUES, D. B.; SALES, L. <em>biblatex-abnt: estilo BibLaTeX para a ABNT</em>. CTAN, v. 4.0 (2016–).</span><a href="https://ctan.org/pkg/biblatex-abnt">ctan.org/pkg/biblatex-abnt</a></li>
+      <li><span class="rt">POLLI, D. A. (trad.). <em>Uma não tão pequena introdução ao LaTeX 2e</em> (lshort-portuguese-br), v3.20. CTAN.</span><a href="https://ctan.org/pkg/lshort-portuguese-br">ctan.org/pkg/lshort-portuguese-br</a></li>
+      <li><span class="rt">XIE, Y. <em>TinyTeX: a lightweight, cross-platform, portable, and easy-to-maintain LaTeX distribution based on TeX Live</em>.</span><a href="https://yihui.org/tinytex/">yihui.org/tinytex</a></li>
+      <li><span class="rt">OVERLEAF. <em>Documentation</em> (docs.overleaf.com) e <em>Learn LaTeX in 30 minutes</em> (overleaf.com/learn). Acesso em 9 set. 2026.</span><a href="https://docs.overleaf.com/">docs.overleaf.com</a> <a href="https://www.overleaf.com/learn">overleaf.com/learn</a></li>
+      <li><span class="rt">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <em>NBR 14724:2024</em>: informação e documentação — trabalhos acadêmicos — apresentação. Rio de Janeiro: ABNT, 2024 (o abnTeX2 1.9.7 implementa a edição de 2011).</span></li>
+      <li><span class="rt">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <em>NBR 6023:2025</em>: informação e documentação — referências — elaboração. Rio de Janeiro: ABNT, 2025 (o abnTeX2 1.9.7 implementa a edição de 2002).</span></li>
+      <li><span class="rt">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <em>NBR 10520:2023</em>: informação e documentação — citações em documentos — apresentação. Rio de Janeiro: ABNT, 2023.</span></li>
+      <li><span class="rt">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <em>NBR 15287:2025</em>: informação e documentação — projeto de pesquisa — apresentação. Rio de Janeiro: ABNT, 2025 (o abnTeX2 1.9.7 implementa a edição de 2011).</span></li>
+    </ol>
+    <div class="note rv"><span class="blabel">Sobre as normas</span><p>As normas da ABNT são vendidas por assinatura (ABNT Coleção; as universidades assinam): este manual as cita pelo número e pela edição, sem reproduzir o texto. O abnTeX2 1.9.7 implementa as edições listadas no seu README (slide «abnTeX2: o que é»); as diferenças para as edições mais novas se conferem com a biblioteca da instituição.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s49" data-title="Como citar, uso de IA e licença">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento · último slide<span>7 de 7</span></div>
+    <h2 class="rv">Como citar este manual, declaração de uso de IA e licença</h2>
+    <div class="two rv">
+      <div>
+        <div class="case"><span class="blabel">Como citar</span><p>MATIAS, J. P. M. <em>LaTeX com Overleaf e abnTeX2: passo a passo.</em> MirandasTech, v1.0, set. 2026. CC BY 4.0.</p><span class="src">Manuais irmãos: zotero.mirandastech.com.br · metodologia.mirandastech.com.br · prisma.mirandastech.com.br · busca.mirandastech.com.br · manual.mirandastech.com.br · plugin.mirandastech.com.br · hub: mirandastech.com.br/pesquisa</span></div>
+        <div class="rule-box"><span class="blabel">Licença</span><p>Conteúdo, capturas e os scripts <code>novo_trabalho.py</code>, <code>compilar.sh</code> e <code>checar_citacoes.py</code>: CC BY 4.0 — use, copie, adapte e redistribua com atribuição. O abnTeX2 é distribuído sob a LPPL 1.3 pelo seu time; o LaTeX sob a LPPL; os modelos da galeria do Overleaf têm as licenças indicadas nas suas páginas. Nenhum vínculo ou endosso do Overleaf, da Digital Science, do time do abnTeX2, do TeX Users Group, do MiKTeX, de Yihui Xie, do Zotero, do Better BibTeX, da Microsoft, da OpenAI, da ABNT ou de qualquer outra ferramenta ou instituição citada.</p></div>
+      </div>
+      <div>
+        <div class="note"><span class="blabel">Declaração de uso de IA</span><p>Este manual foi escrito com assistência de IA (Claude, Anthropic) na estruturação, na redação e na verificação de fatos, sob as regras do manual de Uso de IA na pesquisa científica. Todos os fatos, números, nomes de botões, preços, limites e referências foram conferidos nas fontes indicadas em 09/09/2026; a instalação do TinyTeX, a compilação dos modelos do abnTeX2 e as execuções dos três scripts foram feitas nessa data numa máquina local, sem login no Overleaf. Decisões de conteúdo, seleção das fontes e responsabilidade pelo texto são do autor.</p></div>
+        <div class="colophon" style="margin-top:12px;font-size:11px">Sem garantia: interfaces, planos, preços, limites, versões de pacotes e edições de normas mudam; cada fato traz a data em que foi verificado. Quando a sua tela divergir, vale a tela. A escolha da ferramenta, a conformidade com a norma exigida pelo seu programa, o texto do trabalho e a declaração de uso de IA da sua pesquisa são seus e seguem o seu programa, o seu orientador, a biblioteca da sua instituição e, quando houver, o comitê de ética.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<script>
+
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var tot = slides.length; document.getElementById('tot').textContent = tot; var ns = document.getElementById('nslides'); if (ns) ns.textContent = tot;
+  var cur = document.getElementById('cur'), prog = document.getElementById('prog');
+  var menu = document.getElementById('menu'), scrim = document.getElementById('scrim'), menubtn = document.getElementById('menubtn');
+
+  /* sumário gerado a partir dos slides */
+  var html = '', grp = '';
+  slides.forEach(function(s, i){
+    var t = s.getAttribute('data-title') || ('Slide ' + (i+1));
+    if (s.classList.contains('divider')) { html += '<div class="grp">' + t + '</div>'; return; }
+    if (s.classList.contains('cover')) { html += '<div class="grp">Início</div>'; }
+    html += '<a href="#' + s.id + '" data-i="' + i + '"><span class="n">' + String(i+1).padStart(2,'0') + '</span><span>' + t + '</span></a>';
+  });
+  document.getElementById('menulist').innerHTML = html;
+  document.getElementById('menuclose').addEventListener('click', function(){ toggleMenu(false); });
+  var links = Array.prototype.slice.call(menu.querySelectorAll('a'));
+  function toggleMenu(open){ menu.classList.toggle('open', open); scrim.classList.toggle('on', open); }
+  menubtn.addEventListener('click', function(){ toggleMenu(!menu.classList.contains('open')); });
+  scrim.addEventListener('click', function(){ toggleMenu(false); });
+  links.forEach(function(a){ a.addEventListener('click', function(){ toggleMenu(false); }); });
+
+  /* slide ativo: contador, progresso, revelação, sumário */
+  var active = 0;
+  function setActive(i){
+    active = i; cur.textContent = i + 1; prog.style.width = ((i+1)/tot*100) + '%';
+    links.forEach(function(a){ a.classList.toggle('on', +a.getAttribute('data-i') === i); });
+    var on = menu.querySelector('a.on'); if (on && menu.classList.contains('open')) on.scrollIntoView({block:'nearest'});
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.12 });
+    slides.forEach(function(s){ io.observe(s); });
+  } else { slides.forEach(function(s){ s.classList.add('in'); }); }
+  /* slide ativo = o que ocupa mais área visível */
+  var ticking = false;
+  function recompute(){
+    ticking = false; var vh = window.innerHeight, best = 0, bi = active;
+    slides.forEach(function(s, i){ var r = s.getBoundingClientRect(); var vis = Math.min(r.bottom, vh) - Math.max(r.top, 0); if (vis > best) { best = vis; bi = i; } });
+    if (bi !== active) setActive(bi);
+  }
+  window.addEventListener('scroll', function(){ if (!ticking) { ticking = true; requestAnimationFrame(recompute); } }, { passive: true });
+  window.addEventListener('resize', recompute); recompute(); slides[0].classList.add('in');
+
+  /* ajuste de escala: cada slide cabe na tela (como num programa de apresentação) */
+  function fitAll(){
+    if (window.innerWidth <= 900) { slides.forEach(function(s){ var i = s.querySelector('.inner'); if (i) i.style.zoom = ''; s.classList.add('fit'); }); return; }
+    var avail = window.innerHeight - 52;
+    slides.forEach(function(s){
+      var inner = s.querySelector('.inner'); if (!inner || s.classList.contains('divider') || s.classList.contains('cover')) return;
+      inner.style.zoom = '1'; s.classList.remove('fit');
+      var need = inner.scrollHeight; if (need <= avail) { s.classList.add('fit'); return; }
+      var z = Math.max(0.75, avail / need); inner.style.zoom = z.toFixed(3);
+      if (inner.scrollHeight * z <= avail + 2) s.classList.add('fit');
+    });
+  }
+  window.addEventListener('resize', fitAll); window.addEventListener('load', fitAll); fitAll();
+  /* cards expansíveis abrem em janela sobreposta, sem mudar a altura do slide */
+  var modal = document.getElementById('modal'), mbody = document.getElementById('modal-body'), mtitle = document.getElementById('modal-title');
+  function closeModal(){ modal.classList.remove('on'); mbody.innerHTML = ''; }
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(ev){ if (ev.target === modal) closeModal(); });
+  document.querySelectorAll('details.more').forEach(function(d){
+    var s = d.querySelector('summary'), body = d.querySelector(':scope > div');
+    s.addEventListener('click', function(ev){
+      if (window.matchMedia('print').matches) return;
+      ev.preventDefault(); d.open = false;
+      mtitle.textContent = s.textContent.replace(/^detalhes\s*—\s*/i, '').trim() || 'detalhes';
+      mbody.innerHTML = body.innerHTML; modal.classList.add('on'); attachCopy(mbody);
+    });
+  });
+  /* botão de copiar em código, terminal e prompt */
+  function attachCopy(root){
+    root.querySelectorAll('.code, .term').forEach(function(box){
+      if (box.querySelector(':scope > .copy')) return;
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'copy'; b.textContent = 'copiar'; b.setAttribute('aria-label', 'Copiar conteúdo');
+      b.addEventListener('click', function(){
+        var pre = box.querySelector('pre'); var txt = pre ? pre.innerText : box.innerText;
+        function done(){ b.textContent = 'copiado ✓'; b.classList.add('ok'); setTimeout(function(){ b.textContent = 'copiar'; b.classList.remove('ok'); }, 1600); }
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt).then(done, function(){ fallback(txt); done(); }); } else { fallback(txt); done(); }
+      });
+      box.appendChild(b);
+    });
+  }
+  function fallback(txt){ var ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(e){} document.body.removeChild(ta); }
+  attachCopy(document);
+  /* popover do glossário */
+  var gpop = document.getElementById('gpop'), gcur = null;
+  function showPop(el){ gpop.innerHTML = '<b>' + el.getAttribute('data-t') + '</b>' + el.getAttribute('data-d'); gpop.classList.add('on');
+    var r = el.getBoundingClientRect(), pw = Math.min(340, window.innerWidth - 24); gpop.style.maxWidth = pw + 'px';
+    var left = Math.max(12, Math.min(r.left, window.innerWidth - pw - 12)); gpop.style.left = left + 'px';
+    var ph = gpop.offsetHeight; var top = r.bottom + 8; if (top + ph > window.innerHeight - 8) top = Math.max(8, r.top - ph - 8); gpop.style.top = top + 'px'; gcur = el; }
+  function hidePop(){ gpop.classList.remove('on'); gcur = null; }
+  document.querySelectorAll('.gterm').forEach(function(el){
+    el.addEventListener('mouseenter', function(){ showPop(el); }); el.addEventListener('mouseleave', hidePop);
+    el.addEventListener('focus', function(){ showPop(el); }); el.addEventListener('blur', hidePop);
+    el.addEventListener('click', function(ev){ ev.stopPropagation(); if (gcur === el) hidePop(); else showPop(el); });
+  });
+  document.addEventListener('click', function(){ if (gcur) hidePop(); }); window.addEventListener('scroll', function(){ if (gcur) hidePop(); }, { passive: true });
+
+  function go(i){ i = Math.max(0, Math.min(tot-1, i)); window.scrollTo({ top: slides[i].offsetTop, behavior: 'smooth' }); }
+  document.getElementById('prev').addEventListener('click', function(){ go(active-1); });
+  document.getElementById('next').addEventListener('click', function(){ go(active+1); });
+  document.addEventListener('keydown', function(ev){
+    if (ev.target && /input|textarea|select/i.test(ev.target.tagName)) return;
+    if (ev.key === 'ArrowDown' || ev.key === 'PageDown' || ev.key === ' ' || ev.key === 'ArrowRight') { ev.preventDefault(); go(active+1); }
+    else if (ev.key === 'ArrowUp' || ev.key === 'PageUp' || ev.key === 'ArrowLeft') { ev.preventDefault(); go(active-1); }
+    else if (ev.key === 'Home') { go(0); } else if (ev.key === 'End') { go(tot-1); }
+    else if (ev.key === 'Escape') { toggleMenu(false); closeModal(); }
+  });
+
+  /* checklist — conveniência por leitor, só neste navegador */
+  var KEY = 'mirandastech-latex-checklist-v1';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checklist input[type=checkbox]'));
+  var status = document.getElementById('check-status');
+  function load(){ try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ return {}; } }
+  function save(st){ try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
+  function paint(){ var n = 0; boxes.forEach(function(b){ var it = b.closest('.check-item'); if (b.checked) { n++; it.classList.add('done'); } else { it.classList.remove('done'); } }); if (status) status.textContent = n + ' de ' + boxes.length; }
+  var st = load(); boxes.forEach(function(b){ b.checked = !!st[b.id]; b.addEventListener('change', function(){ var s = load(); s[b.id] = b.checked; save(s); paint(); }); }); paint();
+  var reset = document.getElementById('check-reset'); if (reset) reset.addEventListener('click', function(){ boxes.forEach(function(b){ b.checked = false; }); save({}); paint(); });
+})();
+</script>
+<script>
+(function(){
+  var lb = document.createElement('div'); lb.className = 'lightbox'; lb.setAttribute('role','dialog'); lb.setAttribute('aria-modal','true');
+  lb.innerHTML = '<span class="lb-hint">clique fora ou Esc para fechar</span><button type="button" class="lb-close" aria-label="Fechar">×</button><figure style="margin:0;display:contents"><img alt=""><figcaption hidden></figcaption></figure>';
+  document.body.appendChild(lb);
+  var img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
+  function open(src, alt, text){ img.src = src; img.alt = alt || ''; if (text) { cap.textContent = text; cap.hidden = false; } else { cap.hidden = true; } lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
+  function close(){ lb.classList.remove('on'); img.removeAttribute('src'); document.body.style.overflow = ''; }
+  document.addEventListener('click', function(ev){
+    var t = ev.target;
+    if (t.tagName === 'IMG' && t.closest('.shot')) {
+      var fig = t.closest('figure'), fc = fig && fig.querySelector('figcaption');
+      open(t.currentSrc || t.src, t.alt, fc ? fc.textContent.replace(/\s+/g,' ').trim() : '');
+    }
+  });
+  lb.addEventListener('click', function(ev){ if (ev.target !== img) close(); });
+  document.addEventListener('keydown', function(ev){ if (ev.key === 'Escape' && lb.classList.contains('on')) close(); });
+})();
+</script>
+
+</body>
+</html>
